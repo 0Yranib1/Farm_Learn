@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 1258349427255656516, guid: 232594b22bbe6844aac1f2c9b79a90c0, type: 3}
+  bouncePrefab: {fileID: 1099024652673075766, guid: 3728b615c8c6d5344af6eebaaeee4377, type: 3}
   itemParent: {fileID: 0}
 --- !u!4 &70646688
 Transform:

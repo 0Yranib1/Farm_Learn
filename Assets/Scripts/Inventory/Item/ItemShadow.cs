@@ -23,12 +23,7 @@ namespace MFarm.Inventory
             shadowSprite.sprite = itemSprite.sprite;
             shadowSprite.color = new Color(0, 0, 0, 0.3f);
         }
-
-        // Update is called once per frame
-        void Update()
-        {
         
-        }
     }
     
 }

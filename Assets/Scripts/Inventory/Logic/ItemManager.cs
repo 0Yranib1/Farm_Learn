@@ -9,6 +9,10 @@ public class ItemManager : MonoBehaviour
 {
     public Item itemPrefab;
 
+    public Item bouncePrefab;
+
+    private Transform playerTransform => FindObjectOfType<Player>().transform;
+    
      [SerializeField]private Transform itemParent;
     
      //记录场景
@@ -50,11 +54,13 @@ public class ItemManager : MonoBehaviour
         item.itemID=ID;
     }
 
-    private void OnDropItemEvent(int ID, Vector3 pos)
+    private void OnDropItemEvent(int ID, Vector3 mousePos)
     {
         //扔东西的效果
-        Item item = Instantiate(itemPrefab, pos, Quaternion.identity, itemParent);
+        Item item = Instantiate(bouncePrefab, playerTransform.position, Quaternion.identity, itemParent);
         item.itemID = ID;
+        var dir = (mousePos - playerTransform.position).normalized;
+        item.GetComponent<ItemBounce>().InitBounceItem(mousePos, dir);
     }
     
     /// <summary>
