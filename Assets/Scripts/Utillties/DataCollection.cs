@@ -74,7 +74,7 @@ public class TileProperty
 [System.Serializable]
 public class TileDetails
 {
-    public int GridX, GridY;
+    public int gridX, gridY;
     public bool canDig;
     public bool canDropItem;
     public bool canPlaceFurniture;
