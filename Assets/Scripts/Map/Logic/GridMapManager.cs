@@ -82,6 +82,12 @@ namespace MFarm.Map
                     tile.Value.daysSinceDug = -1;
                     tile.Value.canDig = true;
                     tile.Value.canDropItem = true;
+                    tile.Value.growthDays = -1;
+                }
+
+                if (tile.Value.seedItemID != -1)
+                {
+                    tile.Value.growthDays++;
                 }
             }
             RefreshMap();
@@ -168,8 +174,12 @@ namespace MFarm.Map
                 //物品使用实际功能
                 switch (itemDetails.ItemType)
                 {
+                    case ItemType.Seed:
+                        EventHandler.CallPlantSeedEvent(itemDetails.itemID, currentTile);
+                        EventHandler.CallDropItemEvent(itemDetails.itemID, mouseWorldPos, itemDetails.ItemType);
+                        break;
                     case ItemType.Commodity:
-                        EventHandler.CallDropItemEvent(itemDetails.itemID, mouseWorldPos);
+                        EventHandler.CallDropItemEvent(itemDetails.itemID, mouseWorldPos,itemDetails.ItemType);
                         break;
                     case ItemType.HoeTool:
                         SetDigGround(currentTile);
@@ -231,6 +241,10 @@ namespace MFarm.Map
                 digTilemap.ClearAllTiles();
             if(waterTilemap!=null)
                 waterTilemap.ClearAllTiles();
+            foreach (var crop in FindObjectsOfType<Crop>())
+            {
+                Destroy(crop.gameObject);
+            }
             DisplayMap(SceneManager.GetActiveScene().name);
         }
         
@@ -251,6 +265,10 @@ namespace MFarm.Map
                         SetDigGround(tileDetails);
                     if(tileDetails.daysSinceWatered>-1)
                         SetWaterGround(tileDetails);
+                    if(tileDetails.seedItemID>-1)
+                    {
+                        EventHandler.CallPlantSeedEvent(tileDetails.seedItemID,tileDetails);
+                    }
                 }
             }
         }

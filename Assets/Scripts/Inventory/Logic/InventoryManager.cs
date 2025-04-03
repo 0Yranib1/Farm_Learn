@@ -27,7 +27,7 @@ namespace MFarm.Inventory
             EventHandler.DropItemEvent -= OnDropItemEvent;
         }
 
-        private void OnDropItemEvent(int ID, Vector3 pos)
+        private void OnDropItemEvent(int ID, Vector3 pos, ItemType itemType)
         {
             RemoveItem(ID, 1);
         }

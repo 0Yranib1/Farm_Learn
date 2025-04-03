@@ -19,10 +19,10 @@ public static class EventHandler
         InstantiateItemInScene?.Invoke(ID,pos);
     }
 
-    public static event Action<int, Vector3> DropItemEvent;
-    public static void CallDropItemEvent(int ID, Vector3 pos)
+    public static event Action<int, Vector3,ItemType> DropItemEvent;
+    public static void CallDropItemEvent(int ID, Vector3 pos, ItemType itemType)
     {
-        DropItemEvent?.Invoke(ID,pos);
+        DropItemEvent?.Invoke(ID,pos,itemType);
     }
     
     public static event Action<ItemDetails, bool> ItemSelectEvent;
@@ -82,5 +82,11 @@ public static class EventHandler
     public static void CallExecuteActionAfterAnimation(Vector3 pos, ItemDetails itemDetails)
     {
         ExecuteActionAfterAnimation?.Invoke(pos,itemDetails);
+    }
+
+    public static Action<int, TileDetails> PlantSeedEvent;
+    public static void CallPlantSeedEvent(int seedItemID, TileDetails tileDetails)
+    {
+        PlantSeedEvent?.Invoke(seedItemID,tileDetails);
     }
 }
