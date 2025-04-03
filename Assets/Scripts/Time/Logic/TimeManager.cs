@@ -44,6 +44,12 @@ public class TimeManager : MonoBehaviour
                 UpdateGameTime();
             }
         }
+        // if (Input.GetKeyDown(KeyCode.G))
+        // {
+        //     gameDay++;
+        //     EventHandler.CallGameDayEvent(gameDay, gameSeason);
+        //     EventHandler.CallGameDateEvent(gameHour, gameDay, gameMonth, gameYear, gameSeason);
+        // }
     }
 
     private void NewGameTime()
@@ -97,8 +103,9 @@ public class TimeManager : MonoBehaviour
                             }
                             gameSeason=(Season)seasonNumber;
                         }
+                        //刷新地图和和农作物生长
+                        EventHandler.CallGameDayEvent(gameDay, gameSeason);
                     }
-
                 }
                 EventHandler.CallGameDateEvent(gameHour, gameDay, gameMonth, gameYear, gameSeason);
             }

@@ -18,7 +18,8 @@ namespace MFarm.Map
         
         [Header("地图信息")] 
         public List<MapData_SO> MapDataList;
-        
+
+        private Season currentSeason;
         //场景名称+坐标和对应瓦片信息
         private Dictionary<string, TileDetails> tileDetailsDict = new Dictionary<string, TileDetails>();
 
@@ -29,12 +30,14 @@ namespace MFarm.Map
         {
             EventHandler.ExecuteActionAfterAnimation+=OnExecuteActionAfterAnimation;
             EventHandler.AfterSceneLoadEvent += OnAfterSceneLoadedEvent;
+            EventHandler.GameDayEvent += OnGameDayEvent;
         }
 
         private void OnDisable()
         {
             EventHandler.ExecuteActionAfterAnimation -= OnExecuteActionAfterAnimation;
             EventHandler.AfterSceneLoadEvent -= OnAfterSceneLoadedEvent;
+            EventHandler.GameDayEvent -= OnGameDayEvent;
         }
 
         
@@ -51,6 +54,37 @@ namespace MFarm.Map
             currentGrid = FindObjectOfType<Grid>();
             digTilemap = GameObject.FindWithTag("Dig").GetComponent<Tilemap>();
             waterTilemap = GameObject.FindWithTag("Water").GetComponent<Tilemap>();
+            
+            // DisplayMap(SceneManager.GetActiveScene().name);
+            RefreshMap();
+        }
+    /// <summary>
+    /// 每天运行一次
+    /// </summary>
+    /// <param name="day"></param>
+    /// <param name="season"></param>
+        private void OnGameDayEvent(int day,Season season)
+        {
+            currentSeason = season;
+            foreach (var tile in tileDetailsDict)
+            {
+                if (tile.Value.daysSinceWatered > -1)
+                {
+                    tile.Value.daysSinceWatered=-1;
+                }
+                if (tile.Value.daysSinceDug > -1)
+                {
+                    tile.Value.daysSinceDug ++;
+                }
+                //超期消除挖坑
+                if (tile.Value.daysSinceDug > 5 && tile.Value.seedItemID==-1)
+                {
+                    tile.Value.daysSinceDug = -1;
+                    tile.Value.canDig = true;
+                    tile.Value.canDropItem = true;
+                }
+            }
+            RefreshMap();
         }
         
         private void InitTileDetailsDict(MapData_SO mapData)
@@ -150,6 +184,7 @@ namespace MFarm.Map
                         //音效
                         break;
                 }
+                UpdateTileDetails(currentTile);
             }
         }
         
@@ -173,9 +208,52 @@ namespace MFarm.Map
             if (waterTilemap != null)
                 waterTilemap.SetTile(pos, waterTile);
         }
+
+        /// <summary>
+        /// 更新瓦片信息
+        /// </summary>
+        /// <param name="tileDetails"></param>
+        private void UpdateTileDetails(TileDetails tileDetails)
+        {
+            string key=tileDetails.gridX+"x"+tileDetails.gridY+"y"+SceneManager.GetActiveScene().name;
+            if (tileDetailsDict.ContainsKey(key))
+            {
+                tileDetailsDict[key] = tileDetails;
+            }
+        }
+
+        /// <summary>
+        /// 刷新地图
+        /// </summary>
+        private void RefreshMap()
+        {
+            if(digTilemap!=null)
+                digTilemap.ClearAllTiles();
+            if(waterTilemap!=null)
+                waterTilemap.ClearAllTiles();
+            DisplayMap(SceneManager.GetActiveScene().name);
+        }
         
-        
-        
+        /// <summary>
+        /// 显示地图瓦片
+        /// </summary>
+        /// <param name="sceneName"></param>
+        private void DisplayMap(string sceneName)
+        {
+            foreach (var tile in tileDetailsDict)
+            {
+                var   key=tile.Key;
+                var   tileDetails=tile.Value;
+
+                if (key.Contains(sceneName))
+                {
+                    if(tileDetails.daysSinceDug>-1)
+                        SetDigGround(tileDetails);
+                    if(tileDetails.daysSinceWatered>-1)
+                        SetWaterGround(tileDetails);
+                }
+            }
+        }
         
     }
 }
