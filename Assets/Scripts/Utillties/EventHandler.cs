@@ -95,4 +95,10 @@ public static class EventHandler
     {
         HarvestAtPlayerPosition?.Invoke(itemID);
     }
+
+    public static event Action RefreshCurrentMap;
+    public static void CallRefreshCurrentMap()
+    {
+        RefreshCurrentMap?.Invoke();
+    }
 }

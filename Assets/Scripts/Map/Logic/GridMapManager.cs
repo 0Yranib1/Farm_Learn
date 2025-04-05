@@ -31,6 +31,7 @@ namespace MFarm.Map
             EventHandler.ExecuteActionAfterAnimation+=OnExecuteActionAfterAnimation;
             EventHandler.AfterSceneLoadEvent += OnAfterSceneLoadedEvent;
             EventHandler.GameDayEvent += OnGameDayEvent;
+            EventHandler.RefreshCurrentMap += RefreshMap;
         }
 
         private void OnDisable()
@@ -38,6 +39,7 @@ namespace MFarm.Map
             EventHandler.ExecuteActionAfterAnimation -= OnExecuteActionAfterAnimation;
             EventHandler.AfterSceneLoadEvent -= OnAfterSceneLoadedEvent;
             EventHandler.GameDayEvent -= OnGameDayEvent;
+            EventHandler.RefreshCurrentMap -= RefreshMap;
         }
 
         
@@ -196,7 +198,7 @@ namespace MFarm.Map
                     case ItemType.CollectTool:
                         Crop currentCrop = GetCropObject(mouseWorldPos);
                         //执行收割方法
-                        currentCrop.ProcessToolAction(itemDetails);
+                        currentCrop.ProcessToolAction(itemDetails,currentTile);
                         break;
                 }
                 UpdateTileDetails(currentTile);
