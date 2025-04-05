@@ -193,9 +193,32 @@ namespace MFarm.Map
                         currentTile.daysSinceWatered = 0;
                         //音效
                         break;
+                    case ItemType.CollectTool:
+                        Crop currentCrop = GetCropObject(mouseWorldPos);
+                        //执行收割方法
+                        break;
                 }
                 UpdateTileDetails(currentTile);
             }
+        }
+
+        /// <summary>
+        /// 物理方法判断鼠标点击位置作物
+        /// </summary>
+        /// <param name="mouseWorldPos"></param>
+        /// <returns></returns>
+        private Crop GetCropObject(Vector3 mouseWorldPos)
+        {
+            Collider2D[] colliders = Physics2D.OverlapPointAll(mouseWorldPos);
+            Crop currentCrop = null;
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                if (colliders[i].GetComponent<Crop>())
+                {
+                    currentCrop = colliders[i].GetComponent<Crop>();
+                }
+            }
+            return currentCrop;
         }
         
         /// <summary>

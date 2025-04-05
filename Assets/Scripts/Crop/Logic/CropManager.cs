@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MFarm.CropPlant
 {
-    public class CropManager : MonoBehaviour
+    public class CropManager : Singleton<CropManager>
     {
         public CropDataList_SO cropData;
         private Transform cropParent;
@@ -81,6 +81,7 @@ namespace MFarm.CropPlant
             
             cropInstance.GetComponentInChildren<SpriteRenderer>().sprite = cropSprite;
 
+            cropInstance.GetComponent<Crop>().cropDetails = cropDetails;
 
         }
         
@@ -89,7 +90,7 @@ namespace MFarm.CropPlant
         /// </summary>
         /// <param name="ID"></param>
         /// <returns></returns>
-        private CropDetails getCropDetails(int ID)
+        public CropDetails getCropDetails(int ID)
         {
             return cropData.cropDetailsList.Find(x => x.seedItemID == ID);
         }
