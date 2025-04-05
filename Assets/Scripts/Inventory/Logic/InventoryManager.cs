@@ -20,13 +20,27 @@ namespace MFarm.Inventory
         private void OnEnable()
         {
             EventHandler.DropItemEvent += OnDropItemEvent;
+            EventHandler.HarvestAtPlayerPosition += OnHarvestAtPlayerPositionEvent;
         }
 
         private void OnDisable()
         {
             EventHandler.DropItemEvent -= OnDropItemEvent;
+            EventHandler.HarvestAtPlayerPosition -= OnHarvestAtPlayerPositionEvent;
         }
 
+        private void OnHarvestAtPlayerPositionEvent(int ID)
+        {
+            
+            //背包是否有同id物品
+            var index = GetItemIndexInBag(ID);
+
+            AddItemAtIndex(ID, index, 1);
+            
+            //更新UI
+            EventHandler.CallUpdateInventoryUI(InventoryLocation.Player, playerBag.itemList);
+        }
+        
         private void OnDropItemEvent(int ID, Vector3 pos, ItemType itemType)
         {
             RemoveItem(ID, 1);

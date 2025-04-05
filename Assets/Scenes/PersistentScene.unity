@@ -1182,6 +1182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holdItem: {fileID: 1861809688}
+  toolNoneAnimator: {fileID: 22100000, guid: e6c65fe7377968f4c892b3e36ca2837a, type: 2}
   animatorTypes:
   - partType: 0
     partName: 2
@@ -1189,21 +1190,36 @@ MonoBehaviour:
   - partType: 1
     partName: 2
     overrideController: {fileID: 22100000, guid: 530779856afb70b449e76dc5f7659bd3, type: 2}
+  - partType: 4
+    partName: 2
+    overrideController: {fileID: 22100000, guid: 4319c246baa3c4946813d340d49cae39, type: 2}
+  - partType: 5
+    partName: 2
+    overrideController: {fileID: 22100000, guid: d5040ef0c48d43443b38da3c19273712, type: 2}
+  - partType: 0
+    partName: 0
+    overrideController: {fileID: 22100000, guid: e40e27da302370b4c81bfb56f5959d02, type: 2}
+  - partType: 4
+    partName: 0
+    overrideController: {fileID: 22100000, guid: 9691bd7696605db4c8595ce90c2b0423, type: 2}
+  - partType: 5
+    partName: 0
+    overrideController: {fileID: 22100000, guid: ae77f9bcc48ced5409f963e91c5d44fd, type: 2}
+  - partType: 0
+    partName: 1
+    overrideController: {fileID: 22100000, guid: ade11fc9aab3645439b1bda34d398f05, type: 2}
+  - partType: 4
+    partName: 1
+    overrideController: {fileID: 22100000, guid: 12471e258a64a2d4f8bf53804b7040b6, type: 2}
+  - partType: 5
+    partName: 1
+    overrideController: {fileID: 22100000, guid: 9842554811634434c991d3cc0111dc9d, type: 2}
   - partType: 0
     partName: 3
     overrideController: {fileID: 22100000, guid: e6c65fe7377968f4c892b3e36ca2837a, type: 2}
   - partType: 2
     partName: 3
     overrideController: {fileID: 22100000, guid: facebc93490b5bc4283924137d688454, type: 2}
-  - partType: 4
-    partName: 2
-    overrideController: {fileID: 22100000, guid: 4319c246baa3c4946813d340d49cae39, type: 2}
-  - partType: 4
-    partName: 0
-    overrideController: {fileID: 22100000, guid: 9691bd7696605db4c8595ce90c2b0423, type: 2}
-  - partType: 4
-    partName: 1
-    overrideController: {fileID: 22100000, guid: 12471e258a64a2d4f8bf53804b7040b6, type: 2}
   - partType: 4
     partName: 3
     overrideController: {fileID: 22100000, guid: 4fa4b7ed5a672b3458e542192e1a664b, type: 2}

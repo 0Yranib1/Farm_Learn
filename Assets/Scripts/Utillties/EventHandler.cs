@@ -89,4 +89,10 @@ public static class EventHandler
     {
         PlantSeedEvent?.Invoke(seedItemID,tileDetails);
     }
+    
+    public static event Action<int> HarvestAtPlayerPosition;
+    public static void CallHarvestAtPlayerPosition(int itemID)
+    {
+        HarvestAtPlayerPosition?.Invoke(itemID);
+    }
 }

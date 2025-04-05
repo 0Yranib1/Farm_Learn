@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MFarm.Inventory;
 using UnityEngine;
 
 public class AnimatorOverride : MonoBehaviour
@@ -27,13 +28,33 @@ public class AnimatorOverride : MonoBehaviour
     {
         EventHandler.ItemSelectEvent+=OnItemSelectEvent;
         EventHandler.BeforeSceneUnloadEvent+=OnBeforeSceneUnloadEvent;
+        EventHandler.HarvestAtPlayerPosition += OnHarvestAtPlayerPositionEvent;
     }
 
     private void OnDisable()
     {
         EventHandler.ItemSelectEvent-=OnItemSelectEvent;
         EventHandler.BeforeSceneUnloadEvent-=OnBeforeSceneUnloadEvent;
+        EventHandler.HarvestAtPlayerPosition -= OnHarvestAtPlayerPositionEvent;
     }
+
+    private void OnHarvestAtPlayerPositionEvent(int ID)
+    {
+        Sprite itemSprite= InventoryManager.Instance.GetItemDetails(ID).itemOnWorldSprite;
+        if (holdItem.enabled == false)
+        {
+            StartCoroutine(ShowItem(itemSprite));
+        }
+    }
+
+    private IEnumerator ShowItem(Sprite itemSprite)
+    {
+        holdItem.sprite = itemSprite;
+        holdItem.enabled = true;
+        yield return new WaitForSeconds(0.75f);
+        holdItem.enabled = false;
+    }
+    
     private void OnBeforeSceneUnloadEvent()
     {
         holdItem.enabled = false;
