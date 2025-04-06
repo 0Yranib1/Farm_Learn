@@ -142,7 +142,7 @@ public class CursorManager : MonoBehaviour
         }
         
         TileDetails currentTile = GridMapManager.Instance.GetTileDetailsOnMousePosition(mouseGridPos);
-
+        Crop crop=GridMapManager.Instance.GetCropObject(mouseWorldPos);
         if (currentTile != null)
         {
             CropDetails currentCrop = CropManager.Instance.getCropDetails(currentTile.seedItemID);
@@ -182,6 +182,17 @@ public class CursorManager : MonoBehaviour
                     }
                     break;
                 case ItemType.ChopTool:
+                    if (crop != null)
+                    {
+                        if (crop.CanHarvest&&crop.cropDetails.CheckToolAvaiable(currentItem.itemID))
+                        {
+                            SetCursorValid();
+                        }else
+                        {
+                            SetCursorInValid();
+                        }
+                    }
+                    break;
                 case ItemType.CollectTool:
                     if (currentCrop != null)
                     {

@@ -173,6 +173,7 @@ namespace MFarm.Map
             var currentTile = GetTileDetailsOnMousePosition(mouseGridPos);
             if (currentTile != null)
             {
+                Crop currentCrop = GetCropObject(mouseWorldPos);
                 //物品使用实际功能
                 switch (itemDetails.ItemType)
                 {
@@ -196,8 +197,9 @@ namespace MFarm.Map
                         //音效
                         break;
                     case ItemType.ChopTool:
+                        currentCrop.ProcessToolAction(itemDetails,currentCrop.tileDetails);
+                        break;
                     case ItemType.CollectTool:
-                        Crop currentCrop = GetCropObject(mouseWorldPos);
                         //执行收割方法
                         currentCrop.ProcessToolAction(itemDetails,currentTile);
                         break;
@@ -211,7 +213,7 @@ namespace MFarm.Map
         /// </summary>
         /// <param name="mouseWorldPos"></param>
         /// <returns></returns>
-        private Crop GetCropObject(Vector3 mouseWorldPos)
+        public Crop GetCropObject(Vector3 mouseWorldPos)
         {
             Collider2D[] colliders = Physics2D.OverlapPointAll(mouseWorldPos);
             Crop currentCrop = null;

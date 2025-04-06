@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
             itemDetails.ItemType != ItemType.Furniture)
         {
             mouseX= mouseWorldPos.x- transform.position.x;
-            mouseY= mouseWorldPos.y- transform.position.y;
+            mouseY= mouseWorldPos.y- (transform.position.y+0.85f);//人物身高偏移值
 
             if (Mathf.Abs(mouseX) > Mathf.Abs(mouseY))
             {
