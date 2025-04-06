@@ -192,6 +192,10 @@ public class CursorManager : MonoBehaviour
                             SetCursorInValid();
                         }
                     }
+                    else
+                    {
+                        SetCursorInValid();
+                    }
                     break;
                 case ItemType.CollectTool:
                     if (currentCrop != null)

@@ -50,8 +50,9 @@ public class ItemManager : MonoBehaviour
     /// <param name="pos"></param>
     public void OnInstantiateItemInScene(int ID, Vector3 pos)
     {
-        Item item = Instantiate(itemPrefab, pos, Quaternion.identity, itemParent);
+        Item item = Instantiate(bouncePrefab, pos, Quaternion.identity, itemParent);
         item.itemID=ID;
+        item.GetComponent<ItemBounce>().InitBounceItem(pos, Vector3.up);
     }
 
     private void OnDropItemEvent(int ID, Vector3 mousePos,ItemType itemType)
