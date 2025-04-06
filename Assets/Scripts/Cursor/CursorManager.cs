@@ -181,6 +181,7 @@ public class CursorManager : MonoBehaviour
                         SetCursorInValid();
                     }
                     break;
+                case ItemType.ChopTool:
                 case ItemType.CollectTool:
                     if (currentCrop != null)
                     {
@@ -202,6 +203,7 @@ public class CursorManager : MonoBehaviour
                     }
 
                     break;
+                
             }
                 
         }

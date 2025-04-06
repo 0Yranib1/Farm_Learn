@@ -10,7 +10,7 @@ public class AnimatorOverride : MonoBehaviour
     public SpriteRenderer holdItem;
 
     public AnimatorOverrideController toolNoneAnimator;
-    
+    public AnimatorOverrideController ArmNoneAnimator;
     [Header("各部分动画列表")] public List<AnimatorType> animatorTypes;
 
     private Dictionary<string, Animator> animatorNameDict = new Dictionary<string, Animator>();
@@ -70,6 +70,7 @@ public class AnimatorOverride : MonoBehaviour
             ItemType.HoeTool => PartType.Hoe,
             ItemType.WaterTool => PartType.Water,
             ItemType.CollectTool => PartType.Collect,
+            ItemType.ChopTool => PartType.Chop,
             _ => PartType.None,
         };
         if (isSelected == false)
@@ -95,6 +96,7 @@ public class AnimatorOverride : MonoBehaviour
     private void SwitchAnimator(PartType partType)
     {
         animatorNameDict["Tool"].runtimeAnimatorController= toolNoneAnimator;
+        animatorNameDict["Arm"].runtimeAnimatorController = ArmNoneAnimator;
         foreach (var item in animatorTypes)
         {
             if (item.partType == partType)
