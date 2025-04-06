@@ -27,7 +27,7 @@ namespace MFarm.Inventory
         public int itemAmount;
         public  int slotIndex;
 
-        private InventoryUI inventoryUI => GetComponentInParent<InventoryUI>();
+        public InventoryUI inventoryUI => GetComponentInParent<InventoryUI>();
         
         void Start()
         {
