@@ -23,6 +23,8 @@ namespace MFarm.Map
         //场景名称+坐标和对应瓦片信息
         private Dictionary<string, TileDetails> tileDetailsDict = new Dictionary<string, TileDetails>();
 
+        //场景是否第一次加载
+        private Dictionary<string, bool> firstLoadDict = new Dictionary<string, bool>();
 
         private Grid currentGrid;
         
@@ -47,6 +49,7 @@ namespace MFarm.Map
         {
             foreach (var mapData in MapDataList)
             {
+                firstLoadDict.Add(mapData.sceneName, true);
                 InitTileDetailsDict(mapData);
             }
         }
@@ -58,6 +61,14 @@ namespace MFarm.Map
             waterTilemap = GameObject.FindWithTag("Water").GetComponent<Tilemap>();
             
             // DisplayMap(SceneManager.GetActiveScene().name);
+
+            if (firstLoadDict[SceneManager.GetActiveScene().name])
+            {
+                //预先生成农作物
+                EventHandler.CallGenerateCropEvent();
+                firstLoadDict[SceneManager.GetActiveScene().name] = false;
+            }
+            
             RefreshMap();
         }
     /// <summary>
@@ -196,8 +207,9 @@ namespace MFarm.Map
                         currentTile.daysSinceWatered = 0;
                         //音效
                         break;
+                    case ItemType.BreakTool:
                     case ItemType.ChopTool:
-                        currentCrop.ProcessToolAction(itemDetails,currentCrop.tileDetails);
+                        currentCrop?.ProcessToolAction(itemDetails,currentCrop.tileDetails);
                         break;
                     case ItemType.CollectTool:
                         //执行收割方法
@@ -252,12 +264,16 @@ namespace MFarm.Map
         /// 更新瓦片信息
         /// </summary>
         /// <param name="tileDetails"></param>
-        private void UpdateTileDetails(TileDetails tileDetails)
+        public void UpdateTileDetails(TileDetails tileDetails)
         {
             string key=tileDetails.gridX+"x"+tileDetails.gridY+"y"+SceneManager.GetActiveScene().name;
             if (tileDetailsDict.ContainsKey(key))
             {
                 tileDetailsDict[key] = tileDetails;
+            }
+            else
+            {
+                tileDetailsDict.Add(key, tileDetails);
             }
         }
 

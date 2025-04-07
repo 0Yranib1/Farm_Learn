@@ -181,6 +181,7 @@ public class CursorManager : MonoBehaviour
                         SetCursorInValid();
                     }
                     break;
+                case ItemType.BreakTool:
                 case ItemType.ChopTool:
                     if (crop != null)
                     {
