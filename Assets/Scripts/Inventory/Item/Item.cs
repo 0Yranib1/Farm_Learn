@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MFarm.CropPlant;
 using UnityEngine;
 
 namespace MFarm.Inventory
@@ -30,6 +31,13 @@ namespace MFarm.Inventory
                 coll.size=newSize;
                 coll.offset=new Vector2(0,spriteRenderer.sprite.bounds.center.y);
 
+            }
+
+            if (itemDetails.ItemType == ItemType.ReapableScenery)
+            {
+                gameObject.AddComponent<ReapItem>();
+                gameObject.GetComponent<ReapItem>().InitCropData(itemID);
+                gameObject.AddComponent<ItemInteractive>();
             }
         }
 
