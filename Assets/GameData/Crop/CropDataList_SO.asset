@@ -40,6 +40,7 @@ MonoBehaviour:
     generateAtPlayerPosition: 1
     hasAnimation: 0
     hasParticalEffect: 0
+    effectType: 0
   - seedItemID: 1006
     growthDays: 0100000002000000020000000300000003000000
     growthPrefabs:
@@ -67,6 +68,7 @@ MonoBehaviour:
     generateAtPlayerPosition: 1
     hasAnimation: 0
     hasParticalEffect: 0
+    effectType: 0
   - seedItemID: 1009
     growthDays: 0100000002000000020000000300000003000000
     growthPrefabs:
@@ -94,6 +96,7 @@ MonoBehaviour:
     generateAtPlayerPosition: 1
     hasAnimation: 0
     hasParticalEffect: 0
+    effectType: 0
   - seedItemID: 1003
     growthDays: 0100000002000000020000000400000005000000
     growthPrefabs:
@@ -121,6 +124,7 @@ MonoBehaviour:
     generateAtPlayerPosition: 1
     hasAnimation: 0
     hasParticalEffect: 0
+    effectType: 0
   - seedItemID: 1004
     growthDays: 0100000002000000020000000300000005000000
     growthPrefabs:
@@ -148,6 +152,7 @@ MonoBehaviour:
     generateAtPlayerPosition: 1
     hasAnimation: 0
     hasParticalEffect: 0
+    effectType: 0
   - seedItemID: 1005
     growthDays: 0100000002000000020000000300000004000000
     growthPrefabs:
@@ -175,6 +180,7 @@ MonoBehaviour:
     generateAtPlayerPosition: 1
     hasAnimation: 0
     hasParticalEffect: 0
+    effectType: 0
   - seedItemID: 1007
     growthDays: 0100000002000000020000000300000003000000
     growthPrefabs:
@@ -202,6 +208,7 @@ MonoBehaviour:
     generateAtPlayerPosition: 1
     hasAnimation: 0
     hasParticalEffect: 0
+    effectType: 0
   - seedItemID: 1008
     growthDays: 0100000002000000020000000300000003000000
     growthPrefabs:
@@ -229,6 +236,7 @@ MonoBehaviour:
     generateAtPlayerPosition: 1
     hasAnimation: 0
     hasParticalEffect: 0
+    effectType: 0
   - seedItemID: 1010
     growthDays: 0100000002000000020000000300000003000000
     growthPrefabs:
@@ -256,6 +264,7 @@ MonoBehaviour:
     generateAtPlayerPosition: 1
     hasAnimation: 0
     hasParticalEffect: 0
+    effectType: 0
   - seedItemID: 1011
     growthDays: 0100000002000000020000000300000003000000
     growthPrefabs:
@@ -283,6 +292,7 @@ MonoBehaviour:
     generateAtPlayerPosition: 1
     hasAnimation: 0
     hasParticalEffect: 0
+    effectType: 0
   - seedItemID: 1030
     growthDays: 0100000002000000020000000300000003000000
     growthPrefabs:
@@ -309,7 +319,8 @@ MonoBehaviour:
     regrowTimes: 0
     generateAtPlayerPosition: 0
     hasAnimation: 1
-    hasParticalEffect: 0
+    hasParticalEffect: 1
+    effectType: 1
   - seedItemID: 1033
     growthDays: 0100000002000000020000000300000003000000
     growthPrefabs:
@@ -336,7 +347,8 @@ MonoBehaviour:
     regrowTimes: 0
     generateAtPlayerPosition: 0
     hasAnimation: 1
-    hasParticalEffect: 0
+    hasParticalEffect: 1
+    effectType: 2
   - seedItemID: 1031
     growthDays: 00000000
     growthPrefabs:
@@ -356,6 +368,7 @@ MonoBehaviour:
     generateAtPlayerPosition: 0
     hasAnimation: 0
     hasParticalEffect: 0
+    effectType: 0
   - seedItemID: 1032
     growthDays: 00000000
     growthPrefabs:
@@ -375,3 +388,4 @@ MonoBehaviour:
     generateAtPlayerPosition: 0
     hasAnimation: 0
     hasParticalEffect: 0
+    effectType: 0
