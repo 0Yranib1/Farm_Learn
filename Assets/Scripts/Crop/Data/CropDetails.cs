@@ -53,6 +53,7 @@ public class CropDetails
     public bool hasParticalEffect;
     //TODO:特效 音效 等
     public ParticaleEffectType effectType;
+    public Vector3 effectPos;
 
     /// <summary>
     /// 检查工具是否可用

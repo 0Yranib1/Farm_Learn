@@ -37,6 +37,8 @@ public class Crop : MonoBehaviour
                 }
             }
             //播放粒子
+            if(cropDetails.hasParticalEffect)
+                EventHandler.CallParticleEffectEvent(cropDetails.effectType,transform.position +cropDetails.effectPos);
             //播放声音
         }
 
