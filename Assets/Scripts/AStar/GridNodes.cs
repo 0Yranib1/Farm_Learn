@@ -29,7 +29,7 @@ namespace MFarm.AStar
             }
         }
         
-        public Node GetNode(int xPos, int yPos)
+        public Node GetGridNode(int xPos, int yPos)
         {
             if (xPos < width && yPos < height)
             {
