@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -84,4 +85,13 @@ public class TileDetails
     public int seedItemID = -1;
     public int growthDays = -1;
     public int daysSinceLastHarvest = -1;
+}
+
+[Serializable]
+public class NPCPosition
+{
+    public Transform npc;
+    public string startScent;
+    public Vector3 position;
+
 }
