@@ -1634,7 +1634,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa8247fe0c058ac4cb294b2a80dd9966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentScent: 01Field
+  scheduleData: {fileID: 11400000, guid: 3c8d6e05ae376c943b349ef188fd5900, type: 2}
+  currentSchedule:
+    hour: 0
+    minute: 0
+    day: 0
+    priority: 0
+    season: 0
+    targetScene: 
+    targetGridPosition: {x: 0, y: 0}
+    clipAtStop: {fileID: 0}
+    interactable: 0
+  currentScene: 
   normalSpeed: 2
   minSpeed: 1
   maxSpeed: 3

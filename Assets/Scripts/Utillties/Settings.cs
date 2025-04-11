@@ -15,4 +15,8 @@ public class Settings
     public const int seasonHold = 3;
     public const float fadeDuration = 1.5f;
     public const int reapAmount = 2;
+    
+    //NPC网格移动
+    public const float gridCellSize = 1;
+    public const float gridCellDiagonalSize = 1.41f;
 }

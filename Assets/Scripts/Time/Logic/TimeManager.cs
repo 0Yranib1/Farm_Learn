@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class TimeManager : MonoBehaviour
+public class TimeManager : Singleton<TimeManager>
 {
     [SerializeField] int gameSecond,gameMinute,gameHour,gameDay,gameMonth,gameYear;
     [SerializeField] private Season gameSeason = Season.春天;
@@ -13,9 +13,12 @@ public class TimeManager : MonoBehaviour
 
     private float tikTime;
 
+    public TimeSpan GameTime => new TimeSpan(gameHour, gameMinute, gameSecond);
+    
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         NewGameTime();
     }
 
