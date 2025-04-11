@@ -1648,13 +1648,14 @@ MonoBehaviour:
     season: 0
     targetScene: 
     targetGridPosition: {x: 0, y: 0}
-    clipAtStop: {fileID: 0}
+    clipAtStop: {fileID: 7400000, guid: 54d560542c0284c169c56cddc7145ac6, type: 2}
     interactable: 0
   currentScene: 01Field
   normalSpeed: 2
   minSpeed: 1
   maxSpeed: 3
   isMoving: 0
+  blankAnimationClip: {fileID: 7400000, guid: 500fefed8113b4f7e8f2dc728631a63d, type: 2}
 --- !u!1 &1633324297
 GameObject:
   m_ObjectHideFlags: 0

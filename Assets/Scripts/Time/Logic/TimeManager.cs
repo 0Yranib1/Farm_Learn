@@ -25,7 +25,7 @@ public class TimeManager : Singleton<TimeManager>
     private void Start()
     {
         EventHandler.CallGameDateEvent(gameHour, gameDay, gameMonth, gameYear, gameSeason);
-        EventHandler.CallGameMinuteEvent(gameMinute, gameHour);
+        EventHandler.CallGameMinuteEvent(gameMinute, gameHour,gameDay, gameSeason);
     }
 
     private void Update()
@@ -112,7 +112,7 @@ public class TimeManager : Singleton<TimeManager>
                 }
                 EventHandler.CallGameDateEvent(gameHour, gameDay, gameMonth, gameYear, gameSeason);
             }
-            EventHandler.CallGameMinuteEvent(gameMinute, gameHour);
+            EventHandler.CallGameMinuteEvent(gameMinute, gameHour,gameDay,gameSeason);
         }
     }
 }

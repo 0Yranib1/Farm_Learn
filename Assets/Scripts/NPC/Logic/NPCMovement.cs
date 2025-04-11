@@ -40,10 +40,14 @@ public class NPCMovement : MonoBehaviour
     private Stack<MovementStep> movementSteps;
 
     private bool isInitialised;
-
     private bool npcMove;
     private bool sceneLoaded;
-    
+    //动画计时器
+    private float animationBreakTime;
+    private bool canPlayStopAnimation;
+    private AnimationClip stopAnimationClip;
+    public AnimationClip blankAnimationClip;
+    private AnimatorOverrideController animOverride;
     private TimeSpan GameTime=> TimeManager.Instance.GameTime;
     
     private void Awake()
@@ -53,18 +57,39 @@ public class NPCMovement : MonoBehaviour
         coll = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
         movementSteps = new Stack<MovementStep>();
+        animOverride = new AnimatorOverrideController(anim.runtimeAnimatorController);
+        anim.runtimeAnimatorController= animOverride;
+        scheduleSet= new SortedSet<ScheduleDetails>();
+
+        foreach (var schedule in scheduleData.scheduleList)
+        {
+            scheduleSet.Add(schedule);
+        }
     }
 
     private void OnEnable()
     {
         EventHandler.AfterSceneLoadEvent += OnAfterSceneLoadedEvent;
         EventHandler.BeforeSceneUnloadEvent += OnBeforeSceneUnloadEvent;
+        EventHandler.GameMinuteEvent += OnGameMinuteEvent;
     }
 
     private void OnDisable()
     {
         EventHandler.AfterSceneLoadEvent -= OnAfterSceneLoadedEvent;
         EventHandler.BeforeSceneUnloadEvent -= OnBeforeSceneUnloadEvent;
+        EventHandler.GameMinuteEvent -= OnGameMinuteEvent;
+    }
+
+    private void Update()
+    {
+        if (sceneLoaded)
+        {
+            SwitchAnimation();
+        }
+        //计时器
+        animationBreakTime -= Time.deltaTime;
+        canPlayStopAnimation= animationBreakTime <= 0;
     }
 
     private void FixedUpdate()
@@ -76,6 +101,33 @@ public class NPCMovement : MonoBehaviour
 
     }
 
+    private void OnGameMinuteEvent(int minute, int hour,int day, Season season)
+    {
+        int time = (hour * 100) + minute;
+        ScheduleDetails matchSchedule = null;
+        foreach (var schedule in scheduleSet)
+        {
+            if (schedule.Time == time)
+            {
+                if(schedule.day!=day &&schedule.day!=0)
+                    continue;
+                if(schedule.season!=season)
+                    continue;
+                matchSchedule= schedule;
+            }
+            else if(schedule.Time>time)
+            {
+                break;
+            }
+
+        }
+
+        if (matchSchedule != null)
+        {
+            BuildPath(matchSchedule);
+        }
+    }
+    
     private void OnBeforeSceneUnloadEvent()
     {
         sceneLoaded = false;
@@ -115,6 +167,8 @@ public class NPCMovement : MonoBehaviour
     {
         movementSteps.Clear();
         currentSchedule = schedule;
+        targetGridPosition = (Vector3Int)schedule.targetGridPosition;
+        stopAnimationClip = schedule.clipAtStop;
         if (schedule.targetScene == currentScene)
         {
             AStar.Instance.BuildPath(currentScene, (Vector2Int)currentGridPosition, schedule.targetGridPosition, movementSteps);
@@ -196,9 +250,44 @@ public class NPCMovement : MonoBehaviour
         transform.position = new Vector3(currentGridPosition.x + Settings.gridCellSize / 2f,
             currentGridPosition.y + Settings.gridCellSize / 2f, 0);
         targetGridPosition= currentGridPosition;
-
-
     }
+
+    private void SwitchAnimation()
+    {
+        isMoving = transform.position != GetWorldPosition(targetGridPosition);
+        anim.SetBool("isMoving", isMoving);
+        if (isMoving)
+        {
+            anim.SetBool("Exit", true);
+            anim.SetFloat("DirX", dir.x);
+            anim.SetFloat("DirY", dir.y);
+        }
+        else
+        {
+            anim.SetBool("Exit", false);
+        }
+    }
+
+    private IEnumerator SetStopAnimation()
+    {
+        //强制面向镜头
+        anim.SetFloat("DirX", 0);
+        anim.SetFloat("DirY", -1);
+        animationBreakTime = Settings.animationBreakTime;
+        if (stopAnimationClip != null)
+        {
+            animOverride[blankAnimationClip]= stopAnimationClip;
+            anim.SetBool("EventAnimation", true);
+            yield return null;
+            anim.SetBool("EventAnimation", false);
+        }
+        else
+        {
+            animOverride[stopAnimationClip] = blankAnimationClip;
+            anim.SetBool("EventAnimation", false);
+        }
+    }
+    
     #endregion
 
     private void Movement()
@@ -214,11 +303,16 @@ public class NPCMovement : MonoBehaviour
                 TimeSpan stepTime = new TimeSpan(step.hour, step.minute, step.second);
             
                 MoveToGridPosition(nextGridPosition, stepTime);
+            }else if (isMoving == false && canPlayStopAnimation)
+            {
+                StartCoroutine(SetStopAnimation());
             }
         }
 
     }
 
+    
+    
     private void MoveToGridPosition(Vector3Int gridPos, TimeSpan stepTime)
     {
         StartCoroutine(MoveRoutine(nextGridPosition, stepTime));
