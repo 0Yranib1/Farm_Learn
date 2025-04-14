@@ -31,3 +31,21 @@ MonoBehaviour:
     - sceneName: 02House
       fromGridCell: {x: 99999, y: 99999}
       gotoGridCell: {x: 9, y: -11}
+  - fromScentName: 03Town
+    gotoSceneName: 01Field
+    scenePathList:
+    - sceneName: 01Field
+      fromGridCell: {x: -26, y: 15}
+      gotoGridCell: {x: 99999, y: 99999}
+    - sceneName: 03Town
+      fromGridCell: {x: 99999, y: 99999}
+      gotoGridCell: {x: 8, y: -19}
+  - fromScentName: 01Field
+    gotoSceneName: 03Town
+    scenePathList:
+    - sceneName: 03Town
+      fromGridCell: {x: 8, y: -19}
+      gotoGridCell: {x: 99999, y: 99999}
+    - sceneName: 01Field
+      fromGridCell: {x: 99999, y: 99999}
+      gotoGridCell: {x: -26, y: 15}
