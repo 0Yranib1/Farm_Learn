@@ -78,8 +78,9 @@ namespace MFarm.AStar
                 {
                     var key = (x + originX) + "x" + (y + originY) + "y" + sceneName;
                     Vector3Int tilePos = new Vector3Int(x+originX, y+originY, 0);
-                    //下一行代码需要修改
-                    TileDetails tile=GridMapManager.Instance.GetTileDetailsOnMousePosition(tilePos);
+
+                    TileDetails tile = GridMapManager.Instance.GetTileDetails(key);
+                    
                     if (tile != null)
                     {
                         Node node = gridNodes.GetGridNode(x, y);

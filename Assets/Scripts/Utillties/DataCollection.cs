@@ -95,3 +95,19 @@ public class NPCPosition
     public Vector3 position;
 
 }
+[Serializable]
+public class SceneRoute
+{
+    public string fromScentName;
+    public string gotoSceneName;
+    public List<ScenePath> scenePathList;
+}
+
+//场景路径
+[Serializable]
+public class ScenePath
+{
+    public string sceneName;
+    public Vector2Int fromGridCell;
+    public Vector2Int gotoGridCell;
+}

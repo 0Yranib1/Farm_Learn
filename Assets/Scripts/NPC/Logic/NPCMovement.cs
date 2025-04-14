@@ -36,8 +36,8 @@ public class NPCMovement : MonoBehaviour
     private BoxCollider2D coll;
     private Animator anim;
     private Grid grid;
-
-    private Stack<MovementStep> movementSteps;
+    
+    public Stack<MovementStep> movementSteps;
 
     private bool isInitialised;
     private bool npcMove;
@@ -172,8 +172,41 @@ public class NPCMovement : MonoBehaviour
         if (schedule.targetScene == currentScene)
         {
             AStar.Instance.BuildPath(currentScene, (Vector2Int)currentGridPosition, schedule.targetGridPosition, movementSteps);
+        }else if (schedule.targetScene != currentScene)
+        {
+            SceneRoute sceneRoute= NPCManager.Instance.GetSceneRoute(currentScene, schedule.targetScene);
+
+            if (sceneRoute != null)
+            {
+                for (int i = 0; i < sceneRoute.scenePathList.Count; i++)
+                {
+                    Vector2Int fromPos, gotoPos;
+                    ScenePath path= sceneRoute.scenePathList[i];
+                    if (path.fromGridCell.x >= Settings.maxGridSize)
+                    {
+                        fromPos = (Vector2Int)currentGridPosition;
+                    }
+                    else
+                    {
+                        fromPos = path.fromGridCell;
+                    }
+
+                    if (path.gotoGridCell.x >= Settings.maxGridSize)
+                    {
+                        gotoPos = schedule.targetGridPosition;
+                    }
+                    else
+                    {
+                        gotoPos = path.gotoGridCell;
+                    }
+                    
+                    AStar.Instance.BuildPath(path.sceneName, fromPos, gotoPos, movementSteps);
+                    
+                }
+            }
+            
         }
-        //TODO:跨场景移动
+        
         if (movementSteps.Count > 1)
         {
             //更新每一步对应的时间戳
@@ -231,7 +264,7 @@ public class NPCMovement : MonoBehaviour
         spriteRenderer.enabled = true;
         coll.enabled = true;
         //影子关闭
-        // transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(0).gameObject.SetActive(true);
     }
 
     private void SetInactiveInScene()
@@ -239,7 +272,7 @@ public class NPCMovement : MonoBehaviour
         spriteRenderer.enabled = false;
         coll.enabled = false;
         //影子开启
-        // transform.GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(0).gameObject.SetActive(false);
     }
     
     private void InitNPC()

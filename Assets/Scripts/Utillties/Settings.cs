@@ -22,4 +22,6 @@ public class Settings
     public const float pixelSize = 0.05f;
     //动画间隔
     public const float animationBreakTime = 5f;
+    public const int maxGridSize = 9999;
+    
 }
