@@ -42,6 +42,8 @@ public class NPCMovement : MonoBehaviour
     private bool isInitialised;
     private bool npcMove;
     private bool sceneLoaded;
+    public bool interactable;
+    
     //动画计时器
     private float animationBreakTime;
     private bool canPlayStopAnimation;
@@ -169,6 +171,7 @@ public class NPCMovement : MonoBehaviour
         currentSchedule = schedule;
         targetGridPosition = (Vector3Int)schedule.targetGridPosition;
         stopAnimationClip = schedule.clipAtStop;
+        this.interactable = schedule.interactable;
         if (schedule.targetScene == currentScene)
         {
             AStar.Instance.BuildPath(currentScene, (Vector2Int)currentGridPosition, schedule.targetGridPosition, movementSteps);
