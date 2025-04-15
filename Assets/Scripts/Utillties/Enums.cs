@@ -16,7 +16,7 @@ public enum SlotType
 
 public enum InventoryLocation
 {
-    Player,Shop
+    Player,Shop,Box
 }
 
 public enum PartType

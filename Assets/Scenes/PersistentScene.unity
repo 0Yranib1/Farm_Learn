@@ -1427,6 +1427,8 @@ GameObject:
   - component: {fileID: 1268739793}
   - component: {fileID: 1268739792}
   - component: {fileID: 1268739791}
+  - component: {fileID: 1268739797}
+  - component: {fileID: 1268739796}
   m_Layer: 0
   m_Name: NPC_Girl01
   m_TagString: Untagged
@@ -1626,6 +1628,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &1268739796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268739789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c30a6eb6e5ebb44b9aa0d89a1f8dc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopData: {fileID: 11400000, guid: a259753d25328d9429e3871dbe8bd9be, type: 2}
+--- !u!114 &1268739797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268739789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01cc70bbf8155514f93925f5d2da6d73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnFinishEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1268739796}
+        m_TargetAssemblyTypeName: NPCFunction, Assembly-CSharp
+        m_MethodName: OpenShop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  dialogueList:
+  - faceImage: {fileID: 21300000, guid: 954616e3c701f4e22bd74bbccd87ccc2, type: 3}
+    onLeft: 1
+    name: Mira
+    dialogueText: "\u8981\u770B\u770B\u6709\u4EC0\u4E48\u9700\u8981\u7684\u4E1C\u897F\u5417"
+    hasToPause: 1
+    isDone: 0
 --- !u!1 &1288335152
 GameObject:
   m_ObjectHideFlags: 0
