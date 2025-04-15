@@ -1476,12 +1476,12 @@ MonoBehaviour:
     targetGridPosition: {x: 0, y: 0}
     clipAtStop: {fileID: 0}
     interactable: 0
-  currentScene: 03Town
+  currentScene: 01Field
   normalSpeed: 2
   minSpeed: 1
   maxSpeed: 3
   isMoving: 0
-  interactable: 0
+  interactable: 1
   blankAnimationClip: {fileID: 7400000, guid: 500fefed8113b4f7e8f2dc728631a63d, type: 2}
 --- !u!95 &1268739792
 Animator:

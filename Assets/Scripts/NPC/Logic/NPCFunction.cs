@@ -13,6 +13,7 @@ public class NPCFunction : MonoBehaviour
         if (isOpen && Input.GetKeyDown(KeyCode.Escape))
         {
             //关闭背包
+            CloseShop();
         }
     }
 
@@ -20,5 +21,13 @@ public class NPCFunction : MonoBehaviour
     {
         isOpen = true;
         EventHandler.CallBaseBagOpenEvent(SlotType.Shop, shopData);
+        EventHandler.CallUpdateGameStateEvent(GameState.Pause);
+    }
+    
+    public void CloseShop()
+    {
+        isOpen = false;
+        EventHandler.CallBaseBagCloseEvent(SlotType.Shop, shopData);
+        EventHandler.CallUpdateGameStateEvent(GameState.Gameplay);
     }
 }

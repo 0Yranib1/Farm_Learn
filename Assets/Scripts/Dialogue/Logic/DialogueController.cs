@@ -72,16 +72,23 @@ namespace MFarm.Dialogue
             {
                 //传到ui显示对话
                 EventHandler.CallShowDialogueEvent(result);
+                EventHandler.CallUpdateGameStateEvent(GameState.Pause);
                 yield return new WaitUntil(() => result.isDone);
                 isTalking = false;
             }
             else
             {
                 EventHandler.CallShowDialogueEvent(null);
+                EventHandler.CallUpdateGameStateEvent(GameState.Gameplay);
                 FillDialogueStack();
                 isTalking = false;
 
-                OnFinishEvent?.Invoke();
+                if (OnFinishEvent != null)
+                {
+                    OnFinishEvent?.Invoke();
+                    canTalk = false;
+                }
+                
             }
         }
 
