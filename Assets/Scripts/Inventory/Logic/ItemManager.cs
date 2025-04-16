@@ -17,6 +17,8 @@ public class ItemManager : MonoBehaviour
     
      //记录场景
      private Dictionary<string, List<SceneItem>> sceneItemDict = new Dictionary<string, List<SceneItem>>();
+     //家具
+     private Dictionary<string, List<SceneFurniture>> sceneFurnitureDict= new Dictionary<string, List<SceneFurniture>>();
      
     private void OnEnable()
     {
@@ -46,11 +48,13 @@ public class ItemManager : MonoBehaviour
     private void OnBeforeSceneUnloadEvent()
     {
         GetAllSceneItems();
+        GetAllSceneFurniture();
     }
     public void OnAfterSceneLoadedEvent()
     {
         itemParent = GameObject.FindWithTag("ItemParent").transform;
         RecreateAllItems();
+        RebuildFurniture();
     }
     /// <summary>
     /// 在指定位置生成物品
@@ -129,4 +133,52 @@ public class ItemManager : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// 获得当场景所有家具
+    /// </summary>
+    private void GetAllSceneFurniture()
+    {
+        List<SceneFurniture> currentSceneFurniture = new List<SceneFurniture>();
+        foreach (var item in FindObjectsOfType<Furniture>())
+        {
+            SceneFurniture sceneItem = new SceneFurniture
+            {
+                itemID = item.itemID,
+                position = new SerializableVector3(item.transform.position)
+            };
+            currentSceneFurniture.Add(sceneItem);
+        }
+
+        if (sceneFurnitureDict.ContainsKey(SceneManager.GetActiveScene().name))
+        {
+            //找到数据更新
+            sceneFurnitureDict[SceneManager.GetActiveScene().name] = currentSceneFurniture;
+        }
+        else
+        {
+            //如果是新场景添加数据
+            sceneFurnitureDict.Add(SceneManager.GetActiveScene().name, currentSceneFurniture);
+        }
+    }
+
+    /// <summary>
+    /// 重建当前场景家具
+    /// </summary>
+    private void RebuildFurniture()
+    {
+        List<SceneFurniture> currentSceneFurniture = new List<SceneFurniture>();
+
+        if (sceneFurnitureDict.TryGetValue(SceneManager.GetActiveScene().name, out currentSceneFurniture))
+        {
+            if (currentSceneFurniture != null)
+            {
+                foreach (SceneFurniture sceneFurniture in currentSceneFurniture)
+                {
+                    OnBuildFurnitureEvent(sceneFurniture.itemID, sceneFurniture.position.ToVector3());
+                }
+            }
+        }
+    }
+    
 }

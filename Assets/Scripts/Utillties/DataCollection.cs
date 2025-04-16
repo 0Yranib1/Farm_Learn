@@ -65,6 +65,13 @@ public class SceneItem
     public int itemID;
     public SerializableVector3 position;
 }
+
+[Serializable]
+public class SceneFurniture
+{
+    public int itemID;
+    public SerializableVector3 position;
+}
 [System.Serializable]
 public class TileProperty
 {
