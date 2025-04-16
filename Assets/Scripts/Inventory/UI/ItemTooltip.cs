@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MFarm.Inventory;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,6 +13,10 @@ public class ItemTooltip : MonoBehaviour
     [SerializeField] private TextMeshProUGUI typeText;
     [SerializeField] private Text valueText;
     [SerializeField] private GameObject bottomPart;
+    [Header("建造")] 
+    [SerializeField] public GameObject resourcePanel;
+
+    [SerializeField] private Image[] resourceItem;
 
     public void SetupTooltip(ItemDetails itemDetails, SlotType slotType)
     {
@@ -50,4 +55,24 @@ public class ItemTooltip : MonoBehaviour
             _ => "无"
         };
     }
+    
+    public void SetupResourcePanel(int ID)
+    {
+        var bluePrintDetails = InventoryManager.Instance.bluePrintData.GetBluePrintDetails(ID);
+        for (int i = 0; i < resourceItem.Length; i++)
+        {
+            if (i < bluePrintDetails.resourceItem.Length)
+            {
+                resourceItem[i].gameObject.SetActive(true);
+                resourceItem[i].sprite = InventoryManager.Instance.GetItemDetails(bluePrintDetails.resourceItem[i].itemID).itemIcon;
+                resourceItem[i].transform.GetChild(0).GetComponent<Text>().text=bluePrintDetails.resourceItem[i].itemAmount.ToString();
+                
+            }
+            else
+            {
+                resourceItem[i].gameObject.SetActive(false);
+            }
+        }
+    }
+    
 }

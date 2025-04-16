@@ -27,6 +27,17 @@ public class ShowitemTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExit
             inventoryUI.ItemTooltip.SetupTooltip(slotUI.itemDetails, slotUI.SlotType);
             inventoryUI.ItemTooltip.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0);
             inventoryUI.ItemTooltip.transform.position = transform.position + Vector3.up * 60;
+
+            if (slotUI.itemDetails.ItemType == ItemType.Furniture)
+            {
+                inventoryUI.ItemTooltip.resourcePanel.SetActive(true);
+                inventoryUI.ItemTooltip.SetupResourcePanel(slotUI.itemDetails.itemID);
+            }
+            else
+            {
+                inventoryUI.ItemTooltip.resourcePanel.SetActive(false);
+            }
+            
         }else
         {
             inventoryUI.ItemTooltip.gameObject.SetActive(false);

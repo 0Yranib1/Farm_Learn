@@ -9,7 +9,9 @@ namespace MFarm.Inventory
     {
 
         public ItemDataList_SO ItemDataListSo;
-
+        [Header("建造蓝图")]
+        public BluePrintDataList_SO bluePrintData;
+        
         public InventoryBag_SO playerBag;
 
         [Header("交易")] 
