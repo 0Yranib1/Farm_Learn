@@ -10,7 +10,7 @@ namespace MFarm.Inventory
     {
         public KeyCode key;
         private SlotUI slotUI;
-        private bool canUse;
+        public bool canUse;
         private void Awake()
         {
             slotUI = GetComponent<SlotUI>();
@@ -19,12 +19,24 @@ namespace MFarm.Inventory
         private void OnEnable()
         {
             EventHandler.UpdateGameStateEvent += OnUpdateGameStateEvent;
+            EventHandler.BeforeSceneUnloadEvent += OnBeforeSceneUnloadEvent;
+            EventHandler.AfterSceneLoadEvent += OnAfterSceneLoadedEvent;
         }
 
+        private void OnBeforeSceneUnloadEvent()
+        {
+            canUse = false;
+        }
+        private void OnAfterSceneLoadedEvent()
+        {
+            canUse = true;
+        }
         
         private void OnDisable()
         {
             EventHandler.UpdateGameStateEvent -= OnUpdateGameStateEvent;
+            EventHandler.BeforeSceneUnloadEvent -= OnBeforeSceneUnloadEvent;
+            EventHandler.AfterSceneLoadEvent -= OnAfterSceneLoadedEvent;
         }
         
         private void OnUpdateGameStateEvent(GameState gameState)

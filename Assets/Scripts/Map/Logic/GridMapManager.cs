@@ -234,6 +234,12 @@ namespace MFarm.Map
                             }
                         }
                         break;
+                    case ItemType.Furniture:
+                        //在地图上生成物品 itemmanager
+                        //移除图纸 inventorymanager
+                        //移除资源物品 inventorymanager
+                        EventHandler.CallBuildFurnitureEvent(itemDetails.itemID,mouseWorldPos);
+                        break;
                 }
                 UpdateTileDetails(currentTile);
             }

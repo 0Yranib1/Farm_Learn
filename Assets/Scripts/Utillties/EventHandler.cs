@@ -147,4 +147,11 @@ public static class EventHandler
         ShowTradeUI?.Invoke(itemDetails,isSell);
     }
     
+    //建造
+    public static event Action<int,Vector3 > BuildFurnitureEvent;
+    public static void CallBuildFurnitureEvent(int ID, Vector3 mousePos)
+    {
+        BuildFurnitureEvent?.Invoke(ID,mousePos);
+    }
+
 }

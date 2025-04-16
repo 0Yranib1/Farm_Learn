@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using MFarm.CropPlant;
+using MFarm.Inventory;
 using MFarm.Map;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,6 +15,9 @@ public class CursorManager : MonoBehaviour
     private Image cursorImage;
     private RectTransform cursorCanvas;
 
+    //建造图标
+    private Image buildImage;
+    
     //鼠标检测
     private Camera mainCamera;
     private Grid currentGrid;
@@ -62,6 +66,7 @@ public class CursorManager : MonoBehaviour
             currentItem = null;
             cursorEnable = false;
             currentSprite = normal;
+            buildImage.gameObject.SetActive(false);
         }
         else
         {
@@ -81,6 +86,15 @@ public class CursorManager : MonoBehaviour
                 _ => normal,
             };
             cursorEnable = true;
+
+            //显示建造物品图片
+            if (itemDetails.ItemType == ItemType.Furniture)
+            {
+                buildImage.gameObject.SetActive(true);
+                buildImage.sprite = itemDetails.itemOnWorldSprite;
+                buildImage.SetNativeSize();
+            }
+            
         }
 
     }
@@ -88,6 +102,11 @@ public class CursorManager : MonoBehaviour
     {
         cursorCanvas = GameObject.FindGameObjectWithTag("CursorCanvas").GetComponent<RectTransform>();
         cursorImage = cursorCanvas.GetChild(0).GetComponent<Image>();
+        
+        //获取建造图标
+        buildImage = cursorCanvas.GetChild(1).GetComponent<Image>();
+        buildImage.gameObject.SetActive(false);
+        
         currentSprite = normal;
         SetCursorImage(normal);
         mainCamera=Camera.main;
@@ -107,6 +126,7 @@ public class CursorManager : MonoBehaviour
         else
         {
             SetCursorImage(normal);
+            // buildImage.gameObject.SetActive(false);
         }
 
     }
@@ -133,6 +153,10 @@ public class CursorManager : MonoBehaviour
         mouseGridPos = currentGrid.WorldToCell(mouseWorldPos);
 
         var playerGridPos = currentGrid.WorldToCell(PlayerTransform.position);
+        
+        //建造图片跟随移动
+        buildImage.rectTransform.position = Input.mousePosition;
+        
         //判断使用范围
         if (Mathf.Abs(mouseGridPos.x - playerGridPos.x) > currentItem.itemUseRadius ||
             Mathf.Abs(mouseGridPos.y - playerGridPos.y) > currentItem.itemUseRadius)
@@ -228,6 +252,16 @@ public class CursorManager : MonoBehaviour
                         SetCursorInValid();
                     }
                     break;
+                case ItemType.Furniture:
+                    if (currentTile.canPlaceFurniture && InventoryManager.Instance.CheckStock(currentItem.itemID))
+                    {
+                        SetCursorValid();
+                    }
+                    else
+                    {
+                        SetCursorInValid();
+                    }
+                    break;
                 
             }
                 
@@ -246,6 +280,7 @@ public class CursorManager : MonoBehaviour
     {
         cursorPositionValid = true;
         cursorImage.color = new Color(1, 1, 1, 1);
+        buildImage.color=new Color(1,1,1,0.5f);
     }
     /// <summary>
     /// 设置鼠标不可用
@@ -254,6 +289,7 @@ public class CursorManager : MonoBehaviour
     {
         cursorPositionValid = false;
         cursorImage.color = new Color(1, 0, 0, 0.5f);
+        buildImage.color=new Color(1,0,0,0.5f);
     }
     
     /// <summary>
