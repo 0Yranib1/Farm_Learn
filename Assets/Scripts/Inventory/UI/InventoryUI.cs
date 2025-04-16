@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +23,8 @@ namespace MFarm.Inventory
 
         [Header("交易UI")] 
         public TradeUI tradeUI;
+
+        public TextMeshProUGUI playerMoneyText;
         
         [SerializeField] private SlotUI[] playerSlots;
         [SerializeField] private List<SlotUI> baseBagSlots;
@@ -34,6 +37,8 @@ namespace MFarm.Inventory
             }
 
             bagOpened = bagUI.activeInHierarchy;
+            
+            playerMoneyText.text=InventoryManager.Instance.playerMoney.ToString();
         }
 
         private void Update()
@@ -160,6 +165,7 @@ namespace MFarm.Inventory
                     }    
                     break;
             }
+            playerMoneyText.text=InventoryManager.Instance.playerMoney.ToString();
         }
 
         //打开关闭背包UI 按钮事件

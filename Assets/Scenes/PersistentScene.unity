@@ -1163,6 +1163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemDataListSo: {fileID: 11400000, guid: fa0d915f825bc2f43b007ec0f12ce72a, type: 2}
   playerBag: {fileID: 11400000, guid: 3b46820e82c5823449655eb9da131819, type: 2}
+  playerMoney: 400
 --- !u!4 &906380914
 Transform:
   m_ObjectHideFlags: 0

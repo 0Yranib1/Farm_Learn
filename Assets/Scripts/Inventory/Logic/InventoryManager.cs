@@ -11,6 +11,9 @@ namespace MFarm.Inventory
         public ItemDataList_SO ItemDataListSo;
 
         public InventoryBag_SO playerBag;
+
+        [Header("交易")] 
+        public int playerMoney;
         //通过ID获得物品信息
         private void Start()
         {
@@ -167,6 +170,39 @@ namespace MFarm.Inventory
                 var item = new InventoryItem();
                 playerBag.itemList[index] = item;
             }
+            EventHandler.CallUpdateInventoryUI(InventoryLocation.Player, playerBag.itemList);
+        }
+
+        /// <summary>
+        /// 交易物品
+        /// </summary>
+        /// <param name="itemDetails"></param>
+        /// <param name="amount"></param>
+        /// <param name="isSellTrade"></param>
+        public void TradeItem(ItemDetails itemDetails,int amount,bool isSellTrade)
+        {
+            int cost=itemDetails.itemPrice*amount;
+            //获得物品背包位置
+            int index = GetItemIndexInBag(itemDetails.itemID);
+            if (isSellTrade)//卖
+            {
+                if (playerBag.itemList[index].itemAmount >= amount)
+                {
+                    RemoveItem(itemDetails.itemID, amount);
+                    //卖出总价
+                    cost= (int)(cost * itemDetails.sellPercentage);
+                    playerMoney += cost;
+                }
+            }
+            else if(playerMoney-cost>=0)
+            {
+                if (CheckBagCapacity())
+                {
+                    AddItemAtIndex(itemDetails.itemID, index, amount);
+                }
+                playerMoney -= cost;
+            }
+            //刷新ui
             EventHandler.CallUpdateInventoryUI(InventoryLocation.Player, playerBag.itemList);
         }
         
