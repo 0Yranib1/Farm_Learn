@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,5 +24,9 @@ public class Settings
     //动画间隔
     public const float animationBreakTime = 5f;
     public const int maxGridSize = 9999;
-    
+
+    public static TimeSpan morningTime = new TimeSpan(5, 0, 0);
+    public static TimeSpan nightTime = new TimeSpan(19, 0, 0);
+    public const float lightChangeDuration = 25f;
+
 }

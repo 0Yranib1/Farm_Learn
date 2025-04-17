@@ -430,6 +430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 262315223}
   - component: {fileID: 262315224}
+  - component: {fileID: 262315225}
   m_Layer: 0
   m_Name: Light 2D
   m_TagString: Untagged
@@ -502,6 +503,20 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &262315225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262315222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f904408382c3a3441a3368a0fd919844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightData: {fileID: 11400000, guid: 01caefebc7349ff4fb75a5c0e0db12c3, type: 2}
+  currentLight: {fileID: 0}
 --- !u!1 &484716928
 GameObject:
   m_ObjectHideFlags: 0
@@ -37914,7 +37929,7 @@ Tilemap:
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_Origin: {x: -31, y: -27, z: 0}
   m_Size: {x: 72, y: 47, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
@@ -76323,8 +76338,8 @@ PolygonCollider2D:
     m_Paths:
     - - {x: -33.840057, y: 19.634148}
       - {x: -33.740517, y: -0.07804239}
-      - {x: -33.959015, y: -20.936111}
-      - {x: 36.91608, y: -20.880816}
+      - {x: -33.902374, y: -26.147047}
+      - {x: 36.97272, y: -25.97847}
       - {x: 36.892292, y: 19.717283}
   m_UseDelaunayMesh: 0
 --- !u!4 &1884846799
