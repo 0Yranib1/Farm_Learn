@@ -13,6 +13,7 @@ namespace MFarm.Inventory
         public GameObject mouseIcon;
         private bool canOpen = false;
         private bool isOpen;
+        public int index;
 
         private void OnEnable()
         {
@@ -20,6 +21,20 @@ namespace MFarm.Inventory
             {
                 boxBagData = Instantiate(boxBagTemplate);
             }
+
+            // var key = this.name + index;
+            // if (InventoryManager.Instance.GetBoxDataList(key) != null)//刷新地图读取数据
+            // {
+            //     boxBagData.itemList = InventoryManager.Instance.GetBoxDataList(key);
+            // }
+            // else//新建箱子
+            // {
+            //     if (index == 0)
+            //     {
+            //         index = InventoryManager.Instance.BoxDataAmount;
+            //     }
+            //     InventoryManager.Instance.AddBoxDataDict(this);
+            // }
         }
         
         private void OnTriggerEnter2D(Collider2D other)
@@ -63,6 +78,22 @@ namespace MFarm.Inventory
             }
             
         }
+
+        public void InitBox(int boxIndex)
+        {
+            index=boxIndex;
+            var key = this.name + index;
+            if (InventoryManager.Instance.GetBoxDataList(key) != null)//刷新地图读取数据
+            {
+                boxBagData.itemList = InventoryManager.Instance.GetBoxDataList(key);
+            }
+            else//新建箱子
+            {
+                InventoryManager.Instance.AddBoxDataDict(this);
+            }
+        }
+        
+        
     }
 }
 

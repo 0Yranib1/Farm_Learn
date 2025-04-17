@@ -43,6 +43,11 @@ public class ItemManager : MonoBehaviour
     {
         BluePrintDetails bluePrint = InventoryManager.Instance.bluePrintData.GetBluePrintDetails(ID);
         var buildItem = Instantiate(bluePrint.buildPrefab, mousePos, Quaternion.identity, itemParent);
+        if (buildItem.GetComponent<Box>())
+        {
+            buildItem.GetComponent<Box>().index = InventoryManager.Instance.BoxDataAmount;
+            buildItem.GetComponent<Box>().InitBox(buildItem.GetComponent<Box>().index);
+        }
     }
 
     private void OnBeforeSceneUnloadEvent()
@@ -142,12 +147,16 @@ public class ItemManager : MonoBehaviour
         List<SceneFurniture> currentSceneFurniture = new List<SceneFurniture>();
         foreach (var item in FindObjectsOfType<Furniture>())
         {
-            SceneFurniture sceneItem = new SceneFurniture
+            SceneFurniture sceneFurniture = new SceneFurniture
             {
                 itemID = item.itemID,
                 position = new SerializableVector3(item.transform.position)
             };
-            currentSceneFurniture.Add(sceneItem);
+            if (item.GetComponent<Box>())
+            {
+                sceneFurniture.boxIndex= item.GetComponent<Box>().index;
+            }
+            currentSceneFurniture.Add(sceneFurniture);
         }
 
         if (sceneFurnitureDict.ContainsKey(SceneManager.GetActiveScene().name))
@@ -175,7 +184,12 @@ public class ItemManager : MonoBehaviour
             {
                 foreach (SceneFurniture sceneFurniture in currentSceneFurniture)
                 {
-                    OnBuildFurnitureEvent(sceneFurniture.itemID, sceneFurniture.position.ToVector3());
+                    BluePrintDetails bluePrint = InventoryManager.Instance.bluePrintData.GetBluePrintDetails(sceneFurniture.itemID);
+                    var buildItem = Instantiate(bluePrint.buildPrefab, sceneFurniture.position.ToVector3(), Quaternion.identity, itemParent);
+                    if (buildItem.GetComponent<Box>())
+                    {
+                        buildItem.GetComponent<Box>().InitBox(sceneFurniture.boxIndex);
+                    }
                 }
             }
         }
