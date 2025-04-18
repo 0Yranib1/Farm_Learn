@@ -21,6 +21,7 @@ public class ItemInteractive : MonoBehaviour
             {
                 StartCoroutine(RotateLeft());
             }
+            EventHandler.CallPlaySoundEvent(SoundName.Rustle);
         }
     }
     private void OnTriggerExit2D(Collider2D other)
@@ -36,6 +37,7 @@ public class ItemInteractive : MonoBehaviour
             {
                 StartCoroutine(RotateRight());
             }
+            EventHandler.CallPlaySoundEvent(SoundName.Rustle);
         }
     }
 

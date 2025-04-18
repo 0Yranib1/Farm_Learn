@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : Singleton<AudioManager>
 {
     [Header("音乐数据")]
     public SoundDetailsList_SO soundDetailsList;
@@ -33,11 +33,22 @@ public class AudioManager : MonoBehaviour
     private void OnEnable()
     {
         EventHandler.AfterSceneLoadEvent += OnAfterSceneLoadEvent;
+        EventHandler.PlaySoundEvent += OnPlaySoundEvent;
     }
 
     private void OnDisable()
     {
         EventHandler.AfterSceneLoadEvent -= OnAfterSceneLoadEvent;
+        EventHandler.PlaySoundEvent -= OnPlaySoundEvent;
+    }
+
+    private void OnPlaySoundEvent(SoundName soundName)
+    {
+        var soundDetails= soundDetailsList.GetSoundDetails(soundName);
+        if (soundDetails != null)
+        {
+            EventHandler.CallInitSoundEffect(soundDetails);
+        }
     }
 
     private void OnAfterSceneLoadEvent()

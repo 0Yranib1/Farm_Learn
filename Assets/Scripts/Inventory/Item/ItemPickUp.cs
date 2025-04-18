@@ -14,21 +14,13 @@ namespace  MFarm.Inventory
                 if (item.itemDetails.canPickedUp)
                 {
                     InventoryManager.Instance.AddItem(item, true);
+                    EventHandler.CallPlaySoundEvent(SoundName.PickUp);
                 }
             }
 
         }
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
 
-        // Update is called once per frame
-        void Update()
-        {
         
-        }
     }
 }
 

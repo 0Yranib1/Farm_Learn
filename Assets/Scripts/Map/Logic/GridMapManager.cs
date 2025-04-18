@@ -196,6 +196,7 @@ namespace MFarm.Map
                     case ItemType.Seed:
                         EventHandler.CallPlantSeedEvent(itemDetails.itemID, currentTile);
                         EventHandler.CallDropItemEvent(itemDetails.itemID, mouseWorldPos, itemDetails.ItemType);
+                        EventHandler.CallPlaySoundEvent(SoundName.Plant);
                         break;
                     case ItemType.Commodity:
                         EventHandler.CallDropItemEvent(itemDetails.itemID, mouseWorldPos,itemDetails.ItemType);
@@ -205,12 +206,12 @@ namespace MFarm.Map
                         currentTile.daysSinceDug = 0;
                         currentTile.canDig = false;
                         currentTile.canDropItem = false;
-                        //音效
+                        EventHandler.CallPlaySoundEvent(SoundName.Hoe);
                         break;
                     case ItemType.WaterTool:
                         SetWaterGround(currentTile);
                         currentTile.daysSinceWatered = 0;
-                        //音效
+                        EventHandler.CallPlaySoundEvent(SoundName.Water);
                         break;
                     case ItemType.BreakTool:
                     case ItemType.ChopTool:
@@ -233,6 +234,7 @@ namespace MFarm.Map
                                 break;
                             }
                         }
+                        EventHandler.CallPlaySoundEvent(SoundName.Reap);
                         break;
                     case ItemType.Furniture:
                         //在地图上生成物品 itemmanager
