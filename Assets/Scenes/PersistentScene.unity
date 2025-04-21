@@ -611,7 +611,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 56429c65483aed8419c6ce2bae4cb2ce, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -620,6 +620,12 @@ PlayableDirector:
     value: {fileID: 773476129}
   - key: {fileID: 54842664152512637, guid: 56429c65483aed8419c6ce2bae4cb2ce, type: 2}
     value: {fileID: 2076996785}
+  - key: {fileID: -2757688539268741255, guid: 56429c65483aed8419c6ce2bae4cb2ce, type: 2}
+    value: {fileID: 755839553}
+  - key: {fileID: 6774416491428144777, guid: 56429c65483aed8419c6ce2bae4cb2ce, type: 2}
+    value: {fileID: 1238062620}
+  - key: {fileID: -2651805438125731411, guid: 56429c65483aed8419c6ce2bae4cb2ce, type: 2}
+    value: {fileID: 1940931958}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &247275146
@@ -5282,7 +5288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb48266d26b63d946a69dadacf991661, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starDirector: {fileID: 0}
+  starDirector: {fileID: 224726449}
 --- !u!4 &2022541108
 Transform:
   m_ObjectHideFlags: 0

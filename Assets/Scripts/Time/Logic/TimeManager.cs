@@ -35,12 +35,19 @@ public class TimeManager : Singleton<TimeManager>
     {
         EventHandler.BeforeSceneUnloadEvent+=OnBeforeSceneUnloadEvent;
         EventHandler.AfterSceneLoadEvent += OnAfterSceneLoadEvent;
+        EventHandler.UpdateGameStateEvent += OnUpdateGameStateEvent;
     }
 
     private void OnDisable()
     {
         EventHandler.BeforeSceneUnloadEvent -= OnBeforeSceneUnloadEvent;
         EventHandler.AfterSceneLoadEvent -= OnAfterSceneLoadEvent;
+        EventHandler.UpdateGameStateEvent -= OnUpdateGameStateEvent;
+    }
+    
+    void OnUpdateGameStateEvent(GameState state)
+    {
+        gameClockPause = state == GameState.Pause;
     }
 
     void OnBeforeSceneUnloadEvent()
