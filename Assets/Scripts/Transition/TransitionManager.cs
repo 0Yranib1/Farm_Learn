@@ -1,14 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MFarm.Save;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace MFarm.Transition
 {
         
-
-public class TransitionManager : MonoBehaviour
+public class TransitionManager : MonoBehaviour,ISaveable
 {
         [SceneName]
         public string startSceneName = string.Empty;
@@ -16,11 +16,51 @@ public class TransitionManager : MonoBehaviour
         private CanvasGroup fadeCanvasGroup;
 
         private bool isFade;
+        
+        public string GUID => GetComponent<DataGUID>().guid;
+
+
+        private void Awake()
+        {
+                SceneManager.LoadScene("UI", LoadSceneMode.Additive);
+        }
+
+        public GameSaveData generateSaveData()
+        {
+                GameSaveData saveData = new GameSaveData();
+                saveData.dataSceneName= SceneManager.GetActiveScene().name;
+                
+                return saveData;
+        }
+
+        public void RestoreData(GameSaveData saveData)
+        {
+                //加载游戏场景
+                StartCoroutine(LoadSaveData(saveData.dataSceneName));
+        }
+
+        private IEnumerator LoadSaveData(string sceneName)
+        {
+                yield return Fade(1f);
+                if (SceneManager.GetActiveScene().name != "PersistentScene")//在游戏中加载另外游戏进度
+                {
+                        EventHandler.CallBeforeSceneUnloadEvent();
+                        yield return SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                }
+                yield return LoadSceneSetActive(sceneName);
+                EventHandler.CallAfterSceneLoadEvent();
+                yield return Fade(0);
+                
+        }
+        
         private IEnumerator Start()
         { 
                 fadeCanvasGroup = FindObjectOfType<CanvasGroup>();
                 yield return LoadSceneSetActive(startSceneName);
                 EventHandler.CallAfterSceneLoadEvent();
+                
+                ISaveable saveable = this;
+                saveable.RegisterSaveable();
         }
 
         private void OnEnable()

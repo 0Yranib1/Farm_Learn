@@ -11,9 +11,9 @@ namespace MFarm.Save
         
         GameSaveData generateSaveData();
 
-        void RegisterSaveable()
+        public void RegisterSaveable()
         {
-            SaveLoadManager.Instance.RegisterSaveable(this);
+            SaveLoadManager.Instance.RegisterSaveable(this);   
         }
         
         void RestoreData(GameSaveData saveData);
