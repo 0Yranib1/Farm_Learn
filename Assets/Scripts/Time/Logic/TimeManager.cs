@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MFarm.Save;
 using UnityEditor;
 using UnityEngine;
 
-public class TimeManager : Singleton<TimeManager>
+public class TimeManager : Singleton<TimeManager>, ISaveable
 {
     [SerializeField] int gameSecond,gameMinute,gameHour,gameDay,gameMonth,gameYear;
     [SerializeField] private Season gameSeason = Season.春天;
@@ -17,10 +18,39 @@ public class TimeManager : Singleton<TimeManager>
     
     //灯光时间差
     private float timeDifference;
+    
+    public string GUID => GetComponent<DataGUID>().guid;
+    public GameSaveData generateSaveData()
+    {
+        GameSaveData saveData = new GameSaveData();
+        saveData.timeDict = new Dictionary<string, int>();
+        saveData.timeDict.Add("gameSecond", gameSecond);
+        saveData.timeDict.Add("gameMinute", gameMinute);
+        saveData.timeDict.Add("gameHour", gameHour);
+        saveData.timeDict.Add("gameDay", gameDay);
+        saveData.timeDict.Add("gameMonth", gameMonth);
+        saveData.timeDict.Add("gameSeason", (int)gameSeason);
+        saveData.timeDict.Add("gameYear", gameYear);
+        
+        return saveData;
+    }
+
+    public void RestoreData(GameSaveData saveData)
+    {
+        gameYear= saveData.timeDict["gameYear"];
+        gameMonth= saveData.timeDict["gameMonth"];
+        gameDay= saveData.timeDict["gameDay"];
+        gameHour= saveData.timeDict["gameHour"];
+        gameMinute= saveData.timeDict["gameMinute"];
+        gameSecond= saveData.timeDict["gameSecond"];
+        gameSeason= (Season)saveData.timeDict["gameSeason"];
+    }
+
     protected override void Awake()
     {
         base.Awake();
         NewGameTime();
+        
     }
 
     private void Start()
@@ -29,6 +59,9 @@ public class TimeManager : Singleton<TimeManager>
         EventHandler.CallGameMinuteEvent(gameMinute, gameHour,gameDay, gameSeason);
         //灯光切换
         EventHandler.CallLightShiftChangeEvent(gameSeason, getCurrentLightShift(), timeDifference);
+        
+        ISaveable saveable = this;
+        saveable.RegisterSaveable();
     }
 
     private void OnEnable()

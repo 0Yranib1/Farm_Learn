@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using MFarm.Inventory;
+using MFarm.Save;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ItemManager : MonoBehaviour
+public class ItemManager : MonoBehaviour,ISaveable
 {
     public Item itemPrefab;
 
@@ -20,7 +21,37 @@ public class ItemManager : MonoBehaviour
      //家具
      private Dictionary<string, List<SceneFurniture>> sceneFurnitureDict= new Dictionary<string, List<SceneFurniture>>();
      
-    private void OnEnable()
+     public string GUID => GetComponent<DataGUID>().guid;
+     public GameSaveData generateSaveData()
+     {
+         
+         GetAllSceneItems();
+         GetAllSceneFurniture();
+         
+         GameSaveData saveData = new GameSaveData();
+         
+         saveData.sceneItemDict = sceneItemDict;
+         saveData.sceneFurnitureDict = sceneFurnitureDict;
+         
+         return saveData;
+     }
+
+     public void RestoreData(GameSaveData saveData)
+     {
+         this.sceneItemDict= saveData.sceneItemDict;
+         this.sceneFurnitureDict= saveData.sceneFurnitureDict;
+         
+         RecreateAllItems();
+         RebuildFurniture();
+     }
+
+     private void Start()
+     {
+         ISaveable saveable = this;
+         saveable.RegisterSaveable();
+     }
+
+     private void OnEnable()
     {
         EventHandler.InstantiateItemInScene += OnInstantiateItemInScene;
         EventHandler.BeforeSceneUnloadEvent += OnBeforeSceneUnloadEvent;

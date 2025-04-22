@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using MFarm.CropPlant;
+using MFarm.Save;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,7 +10,7 @@ using UnityEngine.Tilemaps;
 
 namespace MFarm.Map
 {
-    public class GridMapManager : Singleton<GridMapManager>
+    public class GridMapManager : Singleton<GridMapManager>, ISaveable
     {
         
         [Header("种地瓦片")] 
@@ -33,6 +34,21 @@ namespace MFarm.Map
         //杂草列表
         private List<ReapItem> itemsInRadius;
         
+        public string GUID => GetComponent<DataGUID>().guid;
+        public GameSaveData generateSaveData()
+        {
+            GameSaveData saveData= new GameSaveData();
+            saveData.tileDetailsDict = tileDetailsDict;
+            saveData.firstLoadDict = firstLoadDict;
+            return saveData;
+        }
+
+        public void RestoreData(GameSaveData saveData)
+        {
+            this.tileDetailsDict= saveData.tileDetailsDict;
+            this.firstLoadDict= saveData.firstLoadDict;
+        }
+
         private void OnEnable()
         {
             EventHandler.ExecuteActionAfterAnimation+=OnExecuteActionAfterAnimation;
@@ -57,6 +73,9 @@ namespace MFarm.Map
                 firstLoadDict.Add(mapData.sceneName, true);
                 InitTileDetailsDict(mapData);
             }
+            
+            ISaveable saveable = this;
+            saveable.RegisterSaveable();
         }
 
         private void OnAfterSceneLoadedEvent()
