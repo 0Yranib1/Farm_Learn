@@ -15,7 +15,7 @@ public class NPCMovement : MonoBehaviour,ISaveable
     public ScheduleDetails currentSchedule;
     
     //临时存储信息
-    [SerializeField] private string currentScene;
+    [SerializeField] public string currentScene;
     private string targetScene;
     private Vector3Int currentGridPosition;
     private Vector3Int targetGridPosition;

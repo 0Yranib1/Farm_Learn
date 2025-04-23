@@ -12,4 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 794cfbc7354c5a54f945d25d46853d5d, type: 3}
   m_Name: Girl Schedule
   m_EditorClassIdentifier: 
-  scheduleList: []
+  scheduleList:
+  - hour: 8
+    minute: 0
+    day: 0
+    priority: 0
+    season: 0
+    targetScene: 01Field
+    targetGridPosition: {x: -9, y: -4}
+    clipAtStop: {fileID: 0}
+    interactable: 1

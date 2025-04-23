@@ -2123,8 +2123,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcPositionList:
   - npc: {fileID: 1610543685}
-    startScent: 01Field
+    startScene: 01Field
     position: {x: -3.19, y: 3.26, z: 0}
+  - npc: {fileID: 1268739790}
+    startScene: 01Field
+    position: {x: 6.57, y: -21.01, z: 0}
   sceneRouteData: {fileID: 11400000, guid: 769bdaf55f9fa5e4e85a1574e68ed305, type: 2}
 --- !u!1 &738746276
 GameObject:
@@ -2583,6 +2586,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemDataListSo: {fileID: 11400000, guid: fa0d915f825bc2f43b007ec0f12ce72a, type: 2}
   bluePrintData: {fileID: 11400000, guid: b0db799fa45f49944a91627e5b071a9e, type: 2}
+  playerBagTemp: {fileID: 11400000, guid: 3b46820e82c5823449655eb9da131819, type: 2}
   playerBag: {fileID: 11400000, guid: 3b46820e82c5823449655eb9da131819, type: 2}
   playerMoney: 400
 --- !u!4 &906380914
@@ -3455,7 +3459,7 @@ Animator:
   m_GameObject: {fileID: 1268739789}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d31a26a1299721542b7cd415df976877, type: 2}
+  m_Controller: {fileID: 9100000, guid: fd1f3c60627846849898027ac527960e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

@@ -49,19 +49,18 @@ public class TimeManager : Singleton<TimeManager>, ISaveable
     protected override void Awake()
     {
         base.Awake();
-        NewGameTime();
-        
     }
 
     private void Start()
     {
-        EventHandler.CallGameDateEvent(gameHour, gameDay, gameMonth, gameYear, gameSeason);
-        EventHandler.CallGameMinuteEvent(gameMinute, gameHour,gameDay, gameSeason);
-        //灯光切换
-        EventHandler.CallLightShiftChangeEvent(gameSeason, getCurrentLightShift(), timeDifference);
+        // EventHandler.CallGameDateEvent(gameHour, gameDay, gameMonth, gameYear, gameSeason);
+        // EventHandler.CallGameMinuteEvent(gameMinute, gameHour,gameDay, gameSeason);
+        // //灯光切换
+        // EventHandler.CallLightShiftChangeEvent(gameSeason, getCurrentLightShift(), timeDifference);
         
         ISaveable saveable = this;
         saveable.RegisterSaveable();
+        gameClockPause = true;
     }
 
     private void OnEnable()
@@ -69,6 +68,7 @@ public class TimeManager : Singleton<TimeManager>, ISaveable
         EventHandler.BeforeSceneUnloadEvent+=OnBeforeSceneUnloadEvent;
         EventHandler.AfterSceneLoadEvent += OnAfterSceneLoadEvent;
         EventHandler.UpdateGameStateEvent += OnUpdateGameStateEvent;
+        EventHandler.StartNewGameEvent += OnStartNewGameEvent;
     }
 
     private void OnDisable()
@@ -76,8 +76,15 @@ public class TimeManager : Singleton<TimeManager>, ISaveable
         EventHandler.BeforeSceneUnloadEvent -= OnBeforeSceneUnloadEvent;
         EventHandler.AfterSceneLoadEvent -= OnAfterSceneLoadEvent;
         EventHandler.UpdateGameStateEvent -= OnUpdateGameStateEvent;
+        EventHandler.StartNewGameEvent -= OnStartNewGameEvent;
     }
-    
+
+    private void OnStartNewGameEvent(int obj)
+    {
+        NewGameTime();
+        gameClockPause = false;
+    }
+
     void OnUpdateGameStateEvent(GameState state)
     {
         gameClockPause = state == GameState.Pause;

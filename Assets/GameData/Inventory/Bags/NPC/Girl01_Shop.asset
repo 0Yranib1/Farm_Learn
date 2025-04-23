@@ -33,3 +33,7 @@ MonoBehaviour:
     itemAmount: 1
   - itemID: 1011
     itemAmount: 1
+  - itemID: 1040
+    itemAmount: 1
+  - itemID: 1041
+    itemAmount: 1

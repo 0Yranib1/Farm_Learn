@@ -21,6 +21,22 @@ namespace MFarm.Save
         {
             base.Awake();
             jsonFolder = Application.persistentDataPath + "/SAVE DATA/";
+            ReadSaveData();
+        }
+
+        private void OnEnable()
+        {
+            EventHandler.StartNewGameEvent += OnStartNewGameEvent;
+        }
+
+        private void OnDisable()
+        {
+            EventHandler.StartNewGameEvent -= OnStartNewGameEvent;
+        }
+
+        private void OnStartNewGameEvent(int index)
+        {
+            currentDataIndex = index;
         }
 
         public void RegisterSaveable(ISaveable saveable)
@@ -43,6 +59,23 @@ namespace MFarm.Save
             }
         }
 
+        private void ReadSaveData()
+        {
+            if (Directory.Exists(jsonFolder))
+            {
+                for (int i = 0; i < dataSlots.Count; i++)
+                {
+                    var resultPath=jsonFolder+"data"+i+".json";
+                    if (File.Exists(resultPath))
+                    {
+                        var stringData = File.ReadAllText(resultPath);
+                        var jsonData = JsonConvert.DeserializeObject<DataSlot>(stringData);
+                        dataSlots[i] = jsonData;
+                    }
+                }
+            }
+        }
+        
         private void Save(int index)
         {
             DataSlot data = new DataSlot();
@@ -60,10 +93,11 @@ namespace MFarm.Save
             {
                 Directory.CreateDirectory(jsonFolder);
             }
+            Debug.Log("Data"+index+"Saved");
             File.WriteAllText(resultPath,jsonData);
         }
 
-        private void Loda(int index)
+        public void Loda(int index)
         {
             currentDataIndex = index;
             var resulePath=jsonFolder+"data"+index+".json";

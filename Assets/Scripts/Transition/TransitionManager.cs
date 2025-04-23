@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 namespace MFarm.Transition
 {
         
-public class TransitionManager : MonoBehaviour,ISaveable
+public class TransitionManager : Singleton<TransitionManager>,ISaveable
 {
         [SceneName]
         public string startSceneName = string.Empty;
@@ -20,8 +20,9 @@ public class TransitionManager : MonoBehaviour,ISaveable
         public string GUID => GetComponent<DataGUID>().guid;
 
 
-        private void Awake()
+        protected override void Awake()
         {
+                base.Awake(); 
                 SceneManager.LoadScene("UI", LoadSceneMode.Additive);
         }
 
@@ -53,23 +54,27 @@ public class TransitionManager : MonoBehaviour,ISaveable
                 
         }
         
-        private IEnumerator Start()
+        private void Start()
         { 
-                fadeCanvasGroup = FindObjectOfType<CanvasGroup>();
-                yield return LoadSceneSetActive(startSceneName);
-                EventHandler.CallAfterSceneLoadEvent();
-                
                 ISaveable saveable = this;
                 saveable.RegisterSaveable();
+                fadeCanvasGroup = FindObjectOfType<CanvasGroup>();
         }
 
         private void OnEnable()
         {
                 EventHandler.TransitionEvent+= OnTransitionEvent;
+                EventHandler.StartNewGameEvent+= OnStartNewGameEvent;
         }
         private void OnDisable()
         {
                 EventHandler.TransitionEvent-= OnTransitionEvent;
+                EventHandler.StartNewGameEvent-= OnStartNewGameEvent;
+        }
+
+        private void OnStartNewGameEvent(int obj)
+        {
+                StartCoroutine(LoadSaveData(startSceneName));
         }
 
         /// <summary>

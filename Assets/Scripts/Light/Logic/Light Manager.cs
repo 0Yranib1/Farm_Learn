@@ -14,11 +14,18 @@ public class LightManager : MonoBehaviour
     {
         EventHandler.AfterSceneLoadEvent += OnAfterSceneLoadEvent;
         EventHandler.LightShiftChangeEvent += OnLightShiftChangeEvent;
+        EventHandler.StartNewGameEvent += OnStartNewGameEvent;
     }
     private void OnDisable()
     {
         EventHandler.AfterSceneLoadEvent -= OnAfterSceneLoadEvent;
         EventHandler.LightShiftChangeEvent -= OnLightShiftChangeEvent;
+        EventHandler.StartNewGameEvent -= OnStartNewGameEvent;
+    }
+
+    private void OnStartNewGameEvent(int obj)
+    {
+        currentLightShift = LightShift.Morning;
     }
 
     private void OnLightShiftChangeEvent(Season season, LightShift lightShift, float timeDifference)

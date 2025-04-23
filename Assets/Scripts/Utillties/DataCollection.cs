@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [System.Serializable]
 
@@ -99,7 +100,7 @@ public class TileDetails
 public class NPCPosition
 {
     public Transform npc;
-    public string startScent;
+    [FormerlySerializedAs("startScent")] public string startScene;
     public Vector3 position;
 
 }

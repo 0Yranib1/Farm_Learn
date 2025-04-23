@@ -58,6 +58,7 @@ public class ItemManager : MonoBehaviour,ISaveable
         EventHandler.AfterSceneLoadEvent += OnAfterSceneLoadedEvent;
         EventHandler.DropItemEvent += OnDropItemEvent;
         EventHandler.BuildFurnitureEvent += OnBuildFurnitureEvent;
+        EventHandler.StartNewGameEvent += OnStartNewGameEvent;;
     }
     
 
@@ -68,6 +69,13 @@ public class ItemManager : MonoBehaviour,ISaveable
         EventHandler.AfterSceneLoadEvent -= OnAfterSceneLoadedEvent;
         EventHandler.DropItemEvent -= OnDropItemEvent;
         EventHandler.BuildFurnitureEvent -= OnBuildFurnitureEvent;
+        EventHandler.StartNewGameEvent -= OnStartNewGameEvent;
+    }
+
+    private void OnStartNewGameEvent(int obj)
+    {
+        sceneItemDict.Clear();
+        sceneFurnitureDict.Clear();
     }
 
     private void OnBuildFurnitureEvent(int ID, Vector3 mousePos)

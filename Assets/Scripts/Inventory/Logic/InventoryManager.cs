@@ -12,7 +12,8 @@ namespace MFarm.Inventory
         public ItemDataList_SO ItemDataListSo;
         [Header("建造蓝图")]
         public BluePrintDataList_SO bluePrintData;
-        
+
+        public InventoryBag_SO playerBagTemp;
         public InventoryBag_SO playerBag;
 
         private InventoryBag_SO currentBoxBag;
@@ -25,7 +26,7 @@ namespace MFarm.Inventory
         //通过ID获得物品信息
         private void Start()
         {
-            EventHandler.CallUpdateInventoryUI(InventoryLocation.Player, playerBag.itemList);
+            // EventHandler.CallUpdateInventoryUI(InventoryLocation.Player, playerBag.itemList);
             
             ISaveable saveable = this;
             saveable.RegisterSaveable();
@@ -37,6 +38,7 @@ namespace MFarm.Inventory
             EventHandler.HarvestAtPlayerPosition += OnHarvestAtPlayerPositionEvent;
             EventHandler.BuildFurnitureEvent += OnBuildFurnitureEvent;
             EventHandler.BaseBagOpenEvent += OnBaseBagOpenEvent;
+            EventHandler.StartNewGameEvent += OnStartNewGameEvent;
         }
 
         private void OnDisable()
@@ -45,11 +47,21 @@ namespace MFarm.Inventory
             EventHandler.HarvestAtPlayerPosition -= OnHarvestAtPlayerPositionEvent;
             EventHandler.BuildFurnitureEvent -= OnBuildFurnitureEvent;
             EventHandler.BaseBagOpenEvent -= OnBaseBagOpenEvent;
+            EventHandler.StartNewGameEvent -= OnStartNewGameEvent;
+        }
+
+        private void OnStartNewGameEvent(int obj)
+        {
+            playerBag = Instantiate(playerBagTemp);
+            
         }
 
         private void OnBaseBagOpenEvent(SlotType slotType, InventoryBag_SO bag_So)
         {
             currentBoxBag= bag_So;
+            playerMoney = Settings.playerStartMoney;
+            boxDataDict.Clear();
+            EventHandler.CallUpdateInventoryUI(InventoryLocation.Box, currentBoxBag.itemList);
         }
 
         private void OnBuildFurnitureEvent(int ID, Vector3 mousePos)

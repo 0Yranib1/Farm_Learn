@@ -174,4 +174,10 @@ public static class EventHandler
     {
         PlaySoundEvent?.Invoke(soundName);
     }
+
+    public static event Action<int> StartNewGameEvent;
+    public static void CallStarNewGameEvent(int day)
+    {
+        StartNewGameEvent?.Invoke(day);
+    }
 }
