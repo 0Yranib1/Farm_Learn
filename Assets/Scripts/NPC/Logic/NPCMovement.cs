@@ -44,6 +44,8 @@ public class NPCMovement : MonoBehaviour,ISaveable
     private bool npcMove;
     private bool sceneLoaded;
     public bool interactable;
+    public bool isFirstLoad;
+    private Season currentSeason;
     
     //动画计时器
     private float animationBreakTime;
@@ -68,12 +70,16 @@ public class NPCMovement : MonoBehaviour,ISaveable
         }
 
         saveData.interactable = this.interactable;
+        saveData.timeDict = new Dictionary<string, int>();
+        saveData.timeDict.Add("currentSeason", (int)currentSeason);
         return saveData;
     }
 
     public void RestoreData(GameSaveData saveData)
     {
         isInitialised = true;
+
+        isFirstLoad = false;
         
         currentScene = saveData.dataSceneName;
         targetScene = saveData.targetScene;
@@ -88,6 +94,8 @@ public class NPCMovement : MonoBehaviour,ISaveable
             stopAnimationClip =  Resources.InstanceIDToObject(saveData.animationInstanceID) as AnimationClip;
         }
         interactable = saveData.interactable;
+        this.currentSeason= (Season)saveData.timeDict["currentSeason"];
+        
     }
 
     private void Awake()
@@ -150,6 +158,7 @@ public class NPCMovement : MonoBehaviour,ISaveable
     private void OnGameMinuteEvent(int minute, int hour,int day, Season season)
     {
         int time = (hour * 100) + minute;
+        currentSeason = season;
         ScheduleDetails matchSchedule = null;
         foreach (var schedule in scheduleSet)
         {
@@ -191,6 +200,14 @@ public class NPCMovement : MonoBehaviour,ISaveable
             }
 
             sceneLoaded = true;
+            
+            if (!isFirstLoad)
+            {
+                currentGridPosition = grid.WorldToCell(transform.position);
+                var schedule = new ScheduleDetails(0,0,0,0,currentSeason,targetScene,(Vector2Int)targetGridPosition,stopAnimationClip,interactable);
+                BuildPath(schedule);
+                isFirstLoad = true;
+            }
     }
     
     private void CheckVisiable()
@@ -213,6 +230,7 @@ public class NPCMovement : MonoBehaviour,ISaveable
     {
         movementSteps.Clear();
         currentSchedule = schedule;
+        targetScene = schedule.targetScene;
         targetGridPosition = (Vector3Int)schedule.targetGridPosition;
         stopAnimationClip = schedule.clipAtStop;
         this.interactable = schedule.interactable;

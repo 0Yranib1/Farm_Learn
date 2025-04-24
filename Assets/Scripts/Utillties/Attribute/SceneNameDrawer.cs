@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
+
+
 [CustomPropertyDrawer(typeof(SceneNameAttribute))]
 public class SceneNameDrawer : PropertyDrawer
 {
@@ -72,3 +75,4 @@ public class SceneNameDrawer : PropertyDrawer
         property.stringValue=sceneNames[sceneIndex].text;
     }
 }
+#endif

@@ -370,6 +370,7 @@ namespace MFarm.Inventory
         public void RestoreData(GameSaveData saveData)
         {
             this.playerMoney = saveData.playerMoney;
+            playerBag = Instantiate(playerBagTemp);
             playerBag.itemList = saveData.inventoryDict[playerBag.name];
             foreach (var item in saveData.inventoryDict)
             {

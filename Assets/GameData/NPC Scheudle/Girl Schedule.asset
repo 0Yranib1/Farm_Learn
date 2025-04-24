@@ -19,6 +19,6 @@ MonoBehaviour:
     priority: 0
     season: 0
     targetScene: 01Field
-    targetGridPosition: {x: -9, y: -4}
+    targetGridPosition: {x: -6, y: -5}
     clipAtStop: {fileID: 0}
     interactable: 1
