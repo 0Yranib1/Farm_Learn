@@ -15408,7 +15408,7 @@ MonoBehaviour:
       faceImage: {fileID: 21300000, guid: c11d4227b29d5480b8fe4e887c6bc91b, type: 3}
       onLeft: 0
       name: Mira
-      dialogueText: "\u4F60\u88AB\u98CE\u66B4\u9001\u5230\u6B64\u5904"
+      dialogueText: "\u4F60\u9047\u5230\u4E86\u98CE\u66B4 \u6F02\u6D41\u5230\u8FD9\u91CC"
       hasToPause: 1
       isDone: 1
 --- !u!114 &8888394015169940865

@@ -26,7 +26,7 @@ public class AudioManager : Singleton<AudioManager>
     public AudioMixerSnapshot ambientSnapShot;
     public AudioMixerSnapshot muteSnapShot;
 
-    private float musicTransitionSecond = 8f;
+    private float musicTransitionSecond = 24f;
     
     public float MusicStartSecond => Random.Range(5f, 15f);
 
