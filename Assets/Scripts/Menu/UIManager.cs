@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         settingsBtn.onClick.AddListener(TogglePausePanel);
+        volumeSlider.onValueChanged.AddListener(AudioManager.Instance.SetMasterVolume);
     }
 
     private void Start()
@@ -68,7 +69,7 @@ public class UIManager : MonoBehaviour
     {
         pausePanel.SetActive(false);
         yield return new WaitForSeconds(1f);
-
+        EventHandler.CallEndGameEvent();
         Instantiate(menuPrefab, menuCanvas.transform);
     }
     

@@ -65,11 +65,27 @@ public class TransitionManager : Singleton<TransitionManager>,ISaveable
         {
                 EventHandler.TransitionEvent+= OnTransitionEvent;
                 EventHandler.StartNewGameEvent+= OnStartNewGameEvent;
+                EventHandler.EndGameEvent+= OnEndGameEvent;
         }
+
+        private void OnEndGameEvent()
+        {
+                StartCoroutine(UnloadScene());
+        }
+
+        private IEnumerator UnloadScene()
+        {
+                EventHandler.CallBeforeSceneUnloadEvent();
+                yield return Fade(1f);
+                yield return SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+                yield return Fade(0f);
+        }
+        
         private void OnDisable()
         {
                 EventHandler.TransitionEvent-= OnTransitionEvent;
                 EventHandler.StartNewGameEvent-= OnStartNewGameEvent;
+                EventHandler.EndGameEvent-= OnEndGameEvent;
         }
 
         private void OnStartNewGameEvent(int obj)

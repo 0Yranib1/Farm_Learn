@@ -180,4 +180,9 @@ public static class EventHandler
     {
         StartNewGameEvent?.Invoke(day);
     }
+    public static event Action EndGameEvent;
+    public static void CallEndGameEvent()
+    {
+        EndGameEvent?.Invoke();
+    }
 }

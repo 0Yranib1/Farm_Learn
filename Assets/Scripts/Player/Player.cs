@@ -46,21 +46,28 @@ public class Player : MonoBehaviour,ISaveable
         EventHandler.MouseClickedEvent += OnMouseClickedEvent;
         EventHandler.UpdateGameStateEvent += OnUpdateGameStateEvent;
         EventHandler.StartNewGameEvent += OnStartNewGameEvent;
+        EventHandler.EndGameEvent += OnEndGameEvent;
     }
 
 
 
     private void OnDisable()
     {
-        
         EventHandler.BeforeSceneUnloadEvent -= OnBeforeSceneUnloadEvent;
         EventHandler.AfterSceneLoadEvent -= OnAfterSceneLoadedEvent;
         EventHandler.MoveToPosition -= OnMoveToPositionEvent;
         EventHandler.MouseClickedEvent -= OnMouseClickedEvent;
         EventHandler.UpdateGameStateEvent -= OnUpdateGameStateEvent;
         EventHandler.StartNewGameEvent += OnStartNewGameEvent;
+        EventHandler.EndGameEvent -= OnEndGameEvent;
     }
-    
+
+    private void OnEndGameEvent()
+    {
+        inputDisable = true;
+    }
+
+
     private void OnUpdateGameStateEvent(GameState gameState)
     {
         switch (gameState)

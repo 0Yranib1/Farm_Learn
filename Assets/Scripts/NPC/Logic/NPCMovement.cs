@@ -39,6 +39,7 @@ public class NPCMovement : MonoBehaviour,ISaveable
     private Grid grid;
     
     public Stack<MovementStep> movementSteps;
+    private Coroutine npcMoveRoutine;
 
     private bool isInitialised;
     private bool npcMove;
@@ -126,6 +127,14 @@ public class NPCMovement : MonoBehaviour,ISaveable
         EventHandler.AfterSceneLoadEvent += OnAfterSceneLoadedEvent;
         EventHandler.BeforeSceneUnloadEvent += OnBeforeSceneUnloadEvent;
         EventHandler.GameMinuteEvent += OnGameMinuteEvent;
+        EventHandler.EndGameEvent += OnEndGameEvent;
+        EventHandler.StartNewGameEvent += OnStartNewGameEvent;
+    }
+
+    private void OnStartNewGameEvent(int obj)
+    {
+        isInitialised = false;
+        isFirstLoad = true;
     }
 
     private void OnDisable()
@@ -133,6 +142,18 @@ public class NPCMovement : MonoBehaviour,ISaveable
         EventHandler.AfterSceneLoadEvent -= OnAfterSceneLoadedEvent;
         EventHandler.BeforeSceneUnloadEvent -= OnBeforeSceneUnloadEvent;
         EventHandler.GameMinuteEvent -= OnGameMinuteEvent;
+        EventHandler.EndGameEvent -= OnEndGameEvent;
+        EventHandler.StartNewGameEvent -= OnStartNewGameEvent;
+    }
+
+    private void OnEndGameEvent()
+    {
+        sceneLoaded = false;
+        npcMove = false;
+        if (npcMoveRoutine != null)
+        {
+            StopCoroutine(npcMoveRoutine);
+        }
     }
 
     private void Update()
@@ -413,7 +434,7 @@ public class NPCMovement : MonoBehaviour,ISaveable
     
     private void MoveToGridPosition(Vector3Int gridPos, TimeSpan stepTime)
     {
-        StartCoroutine(MoveRoutine(nextGridPosition, stepTime));
+        npcMoveRoutine=StartCoroutine(MoveRoutine(nextGridPosition, stepTime));
     }
 
     private IEnumerator MoveRoutine(Vector3Int gridPos, TimeSpan stepTime)

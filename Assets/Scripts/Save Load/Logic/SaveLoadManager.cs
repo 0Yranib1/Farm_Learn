@@ -27,11 +27,18 @@ namespace MFarm.Save
         private void OnEnable()
         {
             EventHandler.StartNewGameEvent += OnStartNewGameEvent;
+            EventHandler.EndGameEvent += OnEndGameEvent;
         }
 
         private void OnDisable()
         {
             EventHandler.StartNewGameEvent -= OnStartNewGameEvent;
+            EventHandler.EndGameEvent -= OnEndGameEvent;
+        }
+
+        private void OnEndGameEvent()
+        {
+            Save(currentDataIndex);
         }
 
         private void OnStartNewGameEvent(int index)
